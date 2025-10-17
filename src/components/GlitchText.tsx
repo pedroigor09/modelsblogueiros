@@ -172,7 +172,8 @@ const GlitchText: React.FC<GlitchTextProps> = ({
         }
       `}</style>
 
-      <div className={`vhs-container ${isGlitching ? 'glitch-active' : ''} ${analogDistortion ? 'horizontal-glitch' : ''} ${scanLines ? 'scan-lines-active' : ''}`}>
+      {isMounted && (
+        <div className={`vhs-container ${isGlitching ? 'glitch-active' : ''} ${analogDistortion ? 'horizontal-glitch' : ''} ${scanLines ? 'scan-lines-active' : ''}`}>
         
         {/* Texto principal com efeito neon */}
         <motion.h2
@@ -306,7 +307,8 @@ const GlitchText: React.FC<GlitchTextProps> = ({
             transition={{ duration: 0.08 }}
           />
         )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

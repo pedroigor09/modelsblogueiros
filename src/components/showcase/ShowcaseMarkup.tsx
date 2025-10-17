@@ -341,7 +341,7 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                     transform: 'translateY(-50%)',
                     margin: '0 -25px'
                   }}>
-                    <span ref={refs.currentSectionRef}>01</span> / 06
+                    <span ref={refs.currentSectionRef}>01</span> / {String(bloggersData.length).padStart(2, '0')}
                   </div>
                 </div>
               </div>

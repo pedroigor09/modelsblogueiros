@@ -43,5 +43,40 @@ export const bloggersData: Blogger[] = [
     category: "Avant-garde",
     featured: "Art Direction",
     image: "/thiagovitt.jpg"
+  },
+  {
+    id: 6,
+    name: "Suane",
+    category: "Chic Style",
+    featured: "Elegance Redefined",
+    image: "/suane.jpg"
+  },
+  {
+    id: 7,
+    name: "Luiz Felipe",
+    category: "Contemporary",
+    featured: "Modern Edge",
+    image: "/luizfelipe.jpg"
+  },
+  {
+    id: 8,
+    name: "Ygor",
+    category: "Bold Fashion",
+    featured: "Creative Expression",
+    image: "/ygor.jpg"
+  },
+  {
+    id: 9,
+    name: "Rone",
+    category: "Unique Style",
+    featured: "Distinctive Look",
+    image: "/rone.jpg"
+  },
+  {
+    id: 10,
+    name: "Jeferson",
+    category: "Creative Vision",
+    featured: "Unlimited Style",
+    image: "/jef.jpg"
   }
 ];
