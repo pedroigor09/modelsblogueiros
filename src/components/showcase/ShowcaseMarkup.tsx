@@ -340,14 +340,7 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-          <div className="fin" style={{
-            transform: 'rotate(90deg)',
-            position: 'sticky',
-            top: '50vh',
-            color: '#000'
-          }}>
-            FIN
-          </div>
+          <CinematicTransition />
         </div>
       </div>
     </div>
