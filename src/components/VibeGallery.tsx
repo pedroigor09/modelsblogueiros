@@ -4,6 +4,8 @@ import { useRef } from 'react';
 import { motion, useTransform, useScroll } from 'framer-motion';
 import Image from 'next/image';
 import { Blogger } from '../types';
+import InstagramStats from './InstagramStats';
+import GlitchText from './GlitchText';
 
 interface VibeGalleryProps {
   blogger: Blogger;
@@ -24,6 +26,29 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
   const y3 = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
   const isEven = index % 2 === 0;
+
+  // Definir efeito de glitch único para cada blogger
+  const getGlitchType = (index: number): 'shake' | 'split' | 'wave' | 'distort' | 'cyber' | 'matrix' => {
+    const effects: Array<'shake' | 'split' | 'wave' | 'distort' | 'cyber' | 'matrix'> = [
+      'shake', 'split', 'wave', 'distort', 'cyber', 'matrix'
+    ];
+    return effects[index % effects.length];
+  };
+
+  // Cores personalizadas para glitch baseadas na paleta do blogger
+  const getGlitchColors = () => {
+    const colors = [
+      { primary: '#ff0080', secondary: '#00ffff' }, // Neon Pink/Cyan
+      { primary: '#ff4000', secondary: '#00ff80' }, // Orange/Green
+      { primary: '#8000ff', secondary: '#ffff00' }, // Purple/Yellow
+      { primary: '#ff0040', secondary: '#40ff00' }, // Red/Lime
+      { primary: '#0080ff', secondary: '#ff8000' }, // Blue/Orange
+      { primary: '#ff00ff', secondary: '#00ff00' }, // Magenta/Green
+    ];
+    return colors[index % colors.length];
+  };
+
+  const glitchColors = getGlitchColors();
 
   const quotes = [
     "Minha moda é minha voz, cada look é uma palavra que escolho falar ao mundo.",
@@ -57,14 +82,18 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
             transition={{ duration: 1.2, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <motion.h2 
-              className="text-6xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight mb-4"
-              style={{ color: blogger.colorPalette.primary }}
+            <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              {blogger.name}
-            </motion.h2>
+              <GlitchText
+                text={blogger.name}
+                primaryColor={blogger.colorPalette.primary}
+                secondaryColor={glitchColors.secondary}
+                glitchType={getGlitchType(index)}
+                className="text-6xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight mb-4"
+              />
+            </motion.div>
             
             <motion.div 
               className="h-2 rounded-full mb-8"
@@ -126,6 +155,23 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
                 />
               ))}
             </motion.div>
+
+            {/* Instagram Stats */}
+            {blogger.instagram && (
+              <motion.div
+                className="mt-8"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 1.3 }}
+                viewport={{ once: true }}
+              >
+                <InstagramStats 
+                  followers={blogger.instagram.followers} 
+                  primaryColor={blogger.colorPalette.primary}
+                  delay={index * 200}
+                />
+              </motion.div>
+            )}
           </motion.div>
 
           <motion.div 

@@ -9,6 +9,10 @@ export interface Blogger {
   };
   gallery: string[];
   description: string;
+  instagram?: {
+    followers: number;
+    username?: string;
+  };
 }
 
 export interface MousePosition {

@@ -15,7 +15,10 @@ export const mockBloggers: Blogger[] = [
       '/africanique2.jpg',
       '/africanique3.jpg'
     ],
-    description: 'Afrofuturismo e elegância'
+    description: 'Afrofuturismo e elegância',
+    instagram: {
+      followers: 540000
+    }
   },
   {
     id: '2',
@@ -31,7 +34,10 @@ export const mockBloggers: Blogger[] = [
       '/deivisson2.jpg',
       '/deivisson3.jpg'
     ],
-    description: 'Streetwear com atitude'
+    description: 'Streetwear com atitude',
+    instagram: {
+      followers: 269000
+    }
   },
   {
     id: '3',
@@ -47,7 +53,10 @@ export const mockBloggers: Blogger[] = [
       '/laissa2.jpg',
       '/laissa3.jpg'
     ],
-    description: 'Feminilidade e poder'
+    description: 'Feminilidade e poder',
+    instagram: {
+      followers: 138000
+    }
   },
   {
     id: '4',
@@ -63,7 +72,10 @@ export const mockBloggers: Blogger[] = [
       '/kevin2.jpg',
       '/kevin3.jpg'
     ],
-    description: 'Vanguarda e criatividade'
+    description: 'Vanguarda e criatividade',
+    instagram: {
+      followers: 317000
+    }
   },
   {
     id: '5',
@@ -79,7 +91,10 @@ export const mockBloggers: Blogger[] = [
       '/renatinha2.jpg',
       '/renatinha3.jpg'
     ],
-    description: 'Doçura e personalidade'
+    description: 'Doçura e personalidade',
+    instagram: {
+      followers: 711000
+    }
   },
   {
     id: '6',
@@ -95,6 +110,123 @@ export const mockBloggers: Blogger[] = [
       '/thiagovitt2.jpg',
       '/thiagovitt3.jpg'
     ],
-    description: 'Minimalismo moderno'
+    description: 'Minimalismo moderno',
+    instagram: {
+      followers: 67000
+    }
+  },
+  {
+    id: '7',
+    name: 'Luiz Felipe',
+    image: '/luizfelipe.jpg',
+    colorPalette: {
+      primary: '#27AE60',
+      secondary: '#2ECC71',
+      tertiary: '#58D68D'
+    },
+    gallery: [
+      '/luizfelipe.jpg',
+      '/luizfelipe2.jpg',
+      '/luizfelipe3.jpg'
+    ],
+    description: 'Estilo urbano e autêntico',
+    instagram: {
+      followers: 205000
+    }
+  },
+  {
+    id: '8',
+    name: 'Suane',
+    image: '/suane.jpg',
+    colorPalette: {
+      primary: '#8E44AD',
+      secondary: '#BB8FCE',
+      tertiary: '#D7BDE2'
+    },
+    gallery: [
+      '/suane.jpg',
+      '/suane2.jpg',
+      '/suane3.jpg'
+    ],
+    description: 'Sofisticação e charme',
+    instagram: {
+      followers: 552000
+    }
+  },
+  {
+    id: '9',
+    name: 'Wallace',
+    image: '/wall.jpg',
+    colorPalette: {
+      primary: '#E67E22',
+      secondary: '#F39C12',
+      tertiary: '#F7DC6F'
+    },
+    gallery: [
+      '/wall.jpg',
+      '/wall2.jpg',
+      '/wall3.jpg'
+    ],
+    description: 'Energia e personalidade',
+    instagram: {
+      followers: 77600
+    }
+  },
+  {
+    id: '10',
+    name: 'Ygor',
+    image: '/ygor.jpg',
+    colorPalette: {
+      primary: '#C0392B',
+      secondary: '#E74C3C',
+      tertiary: '#EC7063'
+    },
+    gallery: [
+      '/ygor.jpg',
+      '/ygor2.jpg',
+      '/ygor3.jpg'
+    ],
+    description: 'Ousadia e inovação',
+    instagram: {
+      followers: 663000
+    }
+  },
+  {
+    id: '11',
+    name: 'Rone',
+    image: '/rone.jpg',
+    colorPalette: {
+      primary: '#16A085',
+      secondary: '#48C9B0',
+      tertiary: '#76D7C4'
+    },
+    gallery: [
+      '/rone.jpg',
+      '/rone2.jpg',
+      '/rone3.jpg'
+    ],
+    description: 'Estilo único e marcante',
+    instagram: {
+      followers: 228000
+    }
+  },
+  {
+    id: '12',
+    name: 'Jeferson',
+    image: '/jef.jpg',
+    colorPalette: {
+      primary: '#8B008B',
+      secondary: '#DA70D6',
+      tertiary: '#DDA0DD'
+    },
+    gallery: [
+      '/jef.jpg',
+      '/jef2.jpg',
+      '/jef3.jpg'
+    ],
+    description: 'Criatividade sem limites',
+    instagram: {
+      followers: 1200000
+    }
   }
 ];
