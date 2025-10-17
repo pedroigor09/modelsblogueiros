@@ -61,9 +61,14 @@ export const showcaseStyles = `
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    color: var(--text-color);
+    color: #ffffff !important;
     cursor: pointer;
     position: relative;
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+    font-family: var(--font-primary, "PP Neue Montreal", Arial, sans-serif) !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important;
+    z-index: 250 !important;
   }
 
   .artist {
@@ -80,20 +85,23 @@ export const showcaseStyles = `
   }
 
   .artist.loaded {
-    opacity: 0.3;
+    opacity: 0.3 !important;
     transform: translateY(0);
+    color: #ffffff !important;
   }
 
   .category.loaded {
-    opacity: 0.3;
+    opacity: 0.3 !important;
     transform: translateY(0);
+    color: #ffffff !important;
   }
 
   .artist.active {
-    opacity: 1;
+    opacity: 1 !important;
     transform: translateX(10px);
     padding-left: 15px;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #ffffff !important;
   }
 
   .artist.active::before {
@@ -104,15 +112,17 @@ export const showcaseStyles = `
     transform: translateY(-50%);
     width: 4px;
     height: 4px;
-    background-color: var(--text-color);
+    background-color: #ffffff !important;
     border-radius: 50%;
+    z-index: 300;
   }
 
   .category.active {
-    opacity: 1;
+    opacity: 1 !important;
     transform: translateX(-10px);
     padding-right: 15px;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #ffffff !important;
   }
 
   .category.active::after {
@@ -123,8 +133,9 @@ export const showcaseStyles = `
     transform: translateY(-50%);
     width: 4px;
     height: 4px;
-    background-color: var(--text-color);
+    background-color: #ffffff !important;
     border-radius: 50%;
+    z-index: 300;
   }
 
   .background-image.active {

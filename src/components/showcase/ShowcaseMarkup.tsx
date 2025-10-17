@@ -8,6 +8,9 @@ interface ShowcaseMarkupProps {
 }
 
 export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
+  // Debug: verificar se os dados estão carregando
+  console.log('BloggersData:', bloggersData);
+  
   return (
     <div className="creative-showcase">
       {/* Loading Overlay */}
@@ -104,7 +107,7 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
               padding: '0 2rem',
               height: '100%',
               position: 'relative',
-              zIndex: 2
+              zIndex: 100
             }}>
               
               {/* Header */}
@@ -115,8 +118,11 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                 fontSize: '10vw',
                 lineHeight: 0.8,
                 textAlign: 'center',
-                color: 'rgba(245, 245, 245, 0.9)',
-                willChange: 'transform, filter, opacity'
+                color: '#ffffff',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                willChange: 'transform, filter, opacity',
+                zIndex: 150,
+                position: 'relative'
               }}>
                 <div className="header-row">SALVADOR</div>
                 <div className="header-row">BLOGGERS</div>
@@ -137,7 +143,8 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   left: 0,
                   transform: 'translateY(-50%)',
                   padding: '0 2rem',
-                  willChange: 'transform'
+                  willChange: 'transform',
+                  zIndex: 150
                 }}
               >
                 {/* Left Column */}
@@ -148,22 +155,31 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   gap: '0.25rem',
                   textAlign: 'left',
                   willChange: 'filter, opacity',
-                  transition: 'filter 0.5s ease, opacity 0.5s ease'
+                  transition: 'filter 0.5s ease, opacity 0.5s ease',
+                  zIndex: 200
                 }}>
-                  {bloggersData.map((blogger, index) => (
-                    <div
-                      key={blogger.id}
-                      className={`artist ${index === 0 ? 'active loaded' : 'loaded'}`}
-                      style={{
-                        opacity: index === 0 ? 1 : 0.3,
-                        transform: 'translateY(0)',
-                        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                        color: 'rgba(245, 245, 245, 0.9)',
-                        cursor: 'pointer',
-                        position: 'relative',
-                        paddingLeft: index === 0 ? '15px' : '0'
-                      }}
-                    >
+                  {bloggersData.map((blogger, index) => {
+                    console.log(`Renderizando blogger ${index}:`, blogger.name);
+                    return (
+                      <div
+                        key={blogger.id}
+                        className={`artist ${index === 0 ? 'active loaded' : 'loaded'}`}
+                        style={{
+                          opacity: index === 0 ? 1 : 0.3,
+                          transform: 'translateY(0)',
+                          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                          color: '#ffffff',
+                          textShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+                          cursor: 'pointer',
+                          position: 'relative',
+                          paddingLeft: index === 0 ? '15px' : '0',
+                          zIndex: 250,
+                          fontSize: '1.2rem',
+                          fontWeight: '500',
+                          fontFamily: 'var(--font-primary, "PP Neue Montreal", sans-serif)',
+                          background: 'rgba(255,0,0,0.1)' // Debug background temporário
+                        }}
+                      >
                       {index === 0 && (
                         <div style={{
                           position: 'absolute',
@@ -172,13 +188,14 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                           transform: 'translateY(-50%)',
                           width: '4px',
                           height: '4px',
-                          backgroundColor: 'rgba(245, 245, 245, 0.9)',
+                          backgroundColor: '#ffffff',
                           borderRadius: '50%'
                         }} />
                       )}
                       {blogger.name}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Featured */}
@@ -237,22 +254,31 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   gap: '0.25rem',
                   textAlign: 'right',
                   willChange: 'filter, opacity',
-                  transition: 'filter 0.5s ease, opacity 0.5s ease'
+                  transition: 'filter 0.5s ease, opacity 0.5s ease',
+                  zIndex: 200
                 }}>
-                  {bloggersData.map((blogger, index) => (
-                    <div
-                      key={blogger.id}
-                      className={`category ${index === 0 ? 'active loaded' : 'loaded'}`}
-                      style={{
-                        opacity: index === 0 ? 1 : 0.3,
-                        transform: 'translateY(0)',
-                        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                        color: 'rgba(245, 245, 245, 0.9)',
-                        cursor: 'pointer',
-                        position: 'relative',
-                        paddingRight: index === 0 ? '15px' : '0'
-                      }}
-                    >
+                  {bloggersData.map((blogger, index) => {
+                    console.log(`Renderizando categoria ${index}:`, blogger.category);
+                    return (
+                      <div
+                        key={blogger.id}
+                        className={`category ${index === 0 ? 'active loaded' : 'loaded'}`}
+                        style={{
+                          opacity: index === 0 ? 1 : 0.3,
+                          transform: 'translateY(0)',
+                          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                          color: '#ffffff',
+                          textShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+                          cursor: 'pointer',
+                          position: 'relative',
+                          paddingRight: index === 0 ? '15px' : '0',
+                          zIndex: 250,
+                          fontSize: '1.2rem',
+                          fontWeight: '500',
+                          fontFamily: 'var(--font-primary, "PP Neue Montreal", sans-serif)',
+                          background: 'rgba(0,255,0,0.1)' // Debug background temporário
+                        }}
+                      >
                       {index === 0 && (
                         <div style={{
                           position: 'absolute',
@@ -261,13 +287,14 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                           transform: 'translateY(-50%)',
                           width: '4px',
                           height: '4px',
-                          backgroundColor: 'rgba(245, 245, 245, 0.9)',
+                          backgroundColor: '#ffffff',
                           borderRadius: '50%'
                         }} />
                       )}
                       {blogger.category}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -279,9 +306,12 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                 fontSize: '10vw',
                 lineHeight: 0.8,
                 textAlign: 'center',
-                color: 'rgba(245, 245, 245, 0.9)',
+                color: '#ffffff',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
                 willChange: 'transform, filter, opacity',
-                transition: 'filter 0.5s ease, opacity 0.5s ease'
+                transition: 'filter 0.5s ease, opacity 0.5s ease',
+                zIndex: 150,
+                position: 'relative'
               }}>
                 <div className="header-row">STYLE</div>
                 <div className="header-row">ICONS</div>
