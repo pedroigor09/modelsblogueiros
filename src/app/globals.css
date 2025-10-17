@@ -1,15 +1,11 @@
+@import url("https://fonts.cdnfonts.com/css/pp-neue-montreal");
 @import "tailwindcss";
 
 :root {
+  --font-primary: "PP Neue Montreal", sans-serif;
+  --text-color: rgba(245, 245, 245, 0.9);
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +15,214 @@
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  background-color: #fff;
+  scroll-behavior: smooth;
+}
+
 body {
+  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Estilos específicos para o CreativeShowcase */
+.creative-showcase {
+  text-transform: uppercase;
+}
+
+.creative-showcase body {
+  color: #000;
+  background-color: #fff;
+}
+
+/* Utilities personalizados */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Melhorar performance de animações */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Efeitos 3D para cards */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease-out;
+}
+
+.card-3d:hover .card-3d-inner {
+  transform: rotateY(5deg) rotateX(2deg);
+}
+
+/* Smooth scroll para parallax */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  .responsive-title {
+    font-size: 2.5rem !important;
+    line-height: 1.2;
+  }
+  
+  .responsive-subtitle {
+    font-size: 1rem !important;
+  }
+  
+  .responsive-quote {
+    font-size: 0.875rem !important;
+    padding-left: 1rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-title {
+    font-size: 3rem !important;
+  }
+  
+  .responsive-subtitle {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* Improved mobile spacing and centering */
+@media (max-width: 640px) {
+  .mobile-spacing {
+    padding: 1.5rem !important;
+  }
+  
+  .mobile-gap {
+    gap: 2rem !important;
+  }
+  
+  .mobile-center {
+    text-align: center !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* Better grid layout for all screen sizes */
+.centered-grid {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+.balanced-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .balanced-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  .card-3d:hover .card-3d-inner {
+    transform: none;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Estilo para seleção de texto */
+::selection {
+  background-color: rgba(102, 126, 234, 0.3);
+  color: inherit;
+}
+
+/* Custom gradient backgrounds */
+.bg-gradient-salvador {
+  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 25%, #ff9a9e 50%, #667eea 75%, #ffd93d 100%);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom blur effects */
+.backdrop-blur-custom {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Enhanced animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.6); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
 }
