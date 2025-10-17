@@ -28,9 +28,9 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
   const isEven = index % 2 === 0;
 
   // Definir efeito de glitch único para cada blogger
-  const getGlitchType = (index: number): 'shake' | 'split' | 'wave' | 'distort' | 'cyber' | 'matrix' => {
-    const effects: Array<'shake' | 'split' | 'wave' | 'distort' | 'cyber' | 'matrix'> = [
-      'shake', 'split', 'wave', 'distort', 'cyber', 'matrix'
+  const getGlitchType = (index: number): 'vhs' | 'cassette' | 'neon' | 'retro' | 'cyber' | 'analog' => {
+    const effects: Array<'vhs' | 'cassette' | 'neon' | 'retro' | 'cyber' | 'analog'> = [
+      'vhs', 'cassette', 'neon', 'retro', 'cyber', 'analog'
     ];
     return effects[index % effects.length];
   };

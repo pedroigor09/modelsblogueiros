@@ -16,6 +16,7 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
 }) => {
   const [displayCount, setDisplayCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const controls = useAnimation();
@@ -30,9 +31,14 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
     return num.toString();
   };
 
+  // Controle de hidratação
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Animação do contador
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || !isMounted) return;
 
     const timer = setTimeout(() => {
       const duration = 2000; // 2 segundos para a animação
@@ -46,10 +52,10 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
           currentCount += increment;
           setDisplayCount(Math.floor(currentCount));
           
-          // Efeito glitch aleatório
-          if (Math.random() < 0.1) {
+          // Efeito glitch determinístico baseado no step
+          if (step % 12 === 0) { // A cada 12 frames (mais previsível)
             setIsGlitching(true);
-            setTimeout(() => setIsGlitching(false), 100);
+            setTimeout(() => setIsGlitching(false), 50); // Mais rápido
           }
           
           step++;
@@ -63,7 +69,7 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [isInView, followers, delay]);
+  }, [isInView, followers, delay, isMounted]);
 
   // Animação do ícone
   useEffect(() => {
@@ -88,18 +94,26 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
         className="relative"
       >
         {/* Partículas flutuantes */}
-        {[...Array(6)].map((_, i) => (
+        {isMounted && [
+          // Valores pré-calculados para evitar hydration mismatch
+          { left: 90, top: 50, xMotion: 5 },    // 0°
+          { left: 70, top: 15.4, xMotion: 2.5 }, // 60°
+          { left: 30, top: 15.4, xMotion: -2.5 }, // 120°
+          { left: 10, top: 50, xMotion: -5 },    // 180°
+          { left: 30, top: 84.6, xMotion: -2.5 }, // 240°
+          { left: 70, top: 84.6, xMotion: 2.5 }   // 300°
+        ].map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-2 h-2 rounded-full opacity-60"
             style={{
               background: `linear-gradient(45deg, ${primaryColor}, #E1306C)`,
-              left: `${50 + Math.cos((i * 60) * Math.PI / 180) * 40}px`,
-              top: `${50 + Math.sin((i * 60) * Math.PI / 180) * 40}px`,
+              left: `${particle.left}px`,
+              top: `${particle.top}px`,
             }}
             animate={{
               y: [0, -10, 0],
-              x: [0, Math.cos((i * 60) * Math.PI / 180) * 5, 0],
+              x: [0, particle.xMotion, 0],
               opacity: [0.6, 1, 0.6],
               scale: [0.8, 1.2, 0.8],
             }}
@@ -161,15 +175,34 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
         <motion.div
           className="absolute inset-0 rounded-full pointer-events-none"
           style={{
-            background: `conic-gradient(from 0deg, transparent, ${primaryColor}60, transparent)`,
+            background: `conic-gradient(from 0deg, transparent, ${primaryColor}60, #ff0080, #00ffff, transparent)`,
+            filter: 'blur(1px)',
           }}
           animate={{
             rotate: 360,
+            scale: [1, 1.1, 1],
           }}
           transition={{
-            duration: 4,
+            rotate: { duration: 4, repeat: Infinity, ease: "linear" },
+            scale: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+          }}
+        />
+
+        {/* Efeito VHS adicional */}
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, transparent 40%, ${primaryColor}20 60%, transparent 80%)`,
+            filter: 'blur(2px)',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration: 3,
             repeat: Infinity,
-            ease: "linear",
+            ease: "easeInOut",
           }}
         />
       </motion.div>
@@ -209,8 +242,8 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
           }`}
           style={{
             fontFamily: 'monospace',
-            textShadow: isGlitching ? `2px 2px 0px ${primaryColor}40, 0 0 10px ${primaryColor}30` : `0 0 20px ${primaryColor}20`,
-            filter: isGlitching ? 'blur(0.5px)' : 'none',
+            textShadow: isGlitching ? `1px 1px 0px ${primaryColor}30, 0 0 5px ${primaryColor}20` : `0 0 10px ${primaryColor}15`,
+            filter: isGlitching ? 'blur(0.2px)' : 'none',
           }}
         >
           {formatFollowers(displayCount)}
@@ -219,31 +252,40 @@ const InstagramStats: React.FC<InstagramStatsProps> = ({
         {/* Efeito glitch overlay */}
         {isGlitching && (
           <>
+            {/* RGB Shift Vermelho - Mais sutil */}
             <motion.span
-              className="absolute top-0 left-0 text-2xl font-bold text-red-500 opacity-70"
+              className="absolute top-0 left-0 text-2xl font-bold opacity-40 pointer-events-none"
               style={{
                 fontFamily: 'monospace',
-                transform: 'translate(-1px, -1px)',
+                color: '#ff0080',
+                transform: 'translate(-0.5px, -0.5px)',
+                mixBlendMode: 'screen',
+                textShadow: `0 0 3px #ff0080`,
               }}
               animate={{
-                x: [-1, 1, -1],
-                opacity: [0.7, 0.3, 0.7],
+                x: [-0.5, 0.5, -0.5],
+                opacity: [0.4, 0.2, 0.4],
               }}
-              transition={{ duration: 0.1 }}
+              transition={{ duration: 0.05, repeat: 1 }}
             >
               {formatFollowers(displayCount)}
             </motion.span>
+            
+            {/* RGB Shift Ciano - Mais sutil */}
             <motion.span
-              className="absolute top-0 left-0 text-2xl font-bold text-blue-500 opacity-70"
+              className="absolute top-0 left-0 text-2xl font-bold opacity-30 pointer-events-none"
               style={{
                 fontFamily: 'monospace',
-                transform: 'translate(1px, 1px)',
+                color: '#00ffff',
+                transform: 'translate(0.5px, 0.5px)',
+                mixBlendMode: 'screen',
+                textShadow: `0 0 3px #00ffff`,
               }}
               animate={{
-                x: [1, -1, 1],
-                opacity: [0.7, 0.3, 0.7],
+                x: [0.5, -0.5, 0.5],
+                opacity: [0.3, 0.1, 0.3],
               }}
-              transition={{ duration: 0.1 }}
+              transition={{ duration: 0.05, repeat: 1 }}
             >
               {formatFollowers(displayCount)}
             </motion.span>
