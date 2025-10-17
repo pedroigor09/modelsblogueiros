@@ -5,10 +5,8 @@ export const animateLoadingCounter = (
   refs: Pick<ShowcaseRefs, 'loadingOverlayRef' | 'loadingCounterRef'>,
   onComplete: () => void
 ) => {
-  console.log('🎬 Iniciando animação de loading...'); // Debug
   
   if (!refs.loadingOverlayRef.current || !refs.loadingCounterRef.current) {
-    console.log('❌ Refs não encontradas para loading animation');
     return;
   }
   
@@ -19,7 +17,6 @@ export const animateLoadingCounter = (
     opacity: 1
   });
   
-  console.log('✅ Loading overlay configurado e visível');
   
   let counter = 0;
   const counterInterval = setInterval(() => {
@@ -27,7 +24,6 @@ export const animateLoadingCounter = (
     if (counter >= 100) {
       counter = 100;
       clearInterval(counterInterval);
-      console.log('🎯 Contador chegou a 100, iniciando fade out...');
       
       setTimeout(() => {
         // Animar loading para fora - exatamente como no original
@@ -50,7 +46,6 @@ export const animateLoadingCounter = (
             duration: 0.6,
             ease: "power2.inOut",
             onComplete: () => {
-              console.log('🚀 Animando saída do loading overlay...');
               // Slide overlay up como no original
               gsap.to(refs.loadingOverlayRef.current, {
                 y: "-100%",
@@ -61,7 +56,6 @@ export const animateLoadingCounter = (
                   if (refs.loadingOverlayRef.current) {
                     refs.loadingOverlayRef.current.style.display = "none";
                   }
-                  console.log('✨ Loading concluído, iniciando animação das colunas...');
                   // Iniciar animação das colunas
                   onComplete();
                 }
@@ -79,14 +73,12 @@ export const animateLoadingCounter = (
 };
 
 export const animateColumnsEntry = () => {
-  console.log('🎭 Iniciando animação das colunas...');
   
   // Aguardar um frame para garantir que o DOM está atualizado
   requestAnimationFrame(() => {
     const artistItems = document.querySelectorAll('.artist');
     const categoryItems = document.querySelectorAll('.category');
     
-    console.log(`🎨 Encontrou ${artistItems.length} artistas e ${categoryItems.length} categorias`);
     
     // Primeiro, garantir que todos estão resetados
     artistItems.forEach((item, index) => {
@@ -95,7 +87,6 @@ export const animateColumnsEntry = () => {
         opacity: 0, 
         transform: 'translateY(20px)'
       });
-      console.log(`🎯 Reset artista ${index}: ${item.textContent}`);
     });
     
     categoryItems.forEach((item, index) => {
@@ -104,12 +95,10 @@ export const animateColumnsEntry = () => {
         opacity: 0, 
         transform: 'translateY(20px)'
       });
-      console.log(`🎯 Reset categoria ${index}: ${item.textContent}`);
     });
     
     // Aguardar um pouco antes de iniciar as animações
     setTimeout(() => {
-      console.log('🚀 Iniciando animações escalonadas...');
       
       // Animar artistas primeiro - exatamente como no original
       artistItems.forEach((item, index) => {
@@ -118,7 +107,6 @@ export const animateColumnsEntry = () => {
           if (index === 0) {
             item.classList.add('active'); // Primeiro item ativo
           }
-          console.log(`✨ Animando artista ${index}: ${item.textContent}`);
         }, index * 60); // Mesmo timing do original
       });
       
@@ -129,7 +117,6 @@ export const animateColumnsEntry = () => {
           if (index === 0) {
             item.classList.add('active'); // Primeiro item ativo
           }
-          console.log(`✨ Animando categoria ${index}: ${item.textContent}`);
         }, index * 60 + 200); // Mesmo delay do original
       });
     }, 100);

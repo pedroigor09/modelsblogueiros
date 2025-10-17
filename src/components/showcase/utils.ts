@@ -1,9 +1,20 @@
 import { ShowcaseRefs, ShowcaseState } from './types';
 import { bloggersData } from './data';
 
-export const updateProgressNumbers = (state: ShowcaseState) => {
-  // Implementar lógica de atualização dos números de progresso se necessário
-  console.log(`Progress: ${state.currentSection.current + 1}/${bloggersData.length}`);
+export const updateProgressNumbers = (state: ShowcaseState, refs?: ShowcaseRefs) => {
+  const currentNum = state.currentSection.current + 1;
+  const totalNum = bloggersData.length;
+
+  
+  if (refs?.currentSectionRef.current) {
+    const formattedNum = currentNum.toString().padStart(2, '0');
+    refs.currentSectionRef.current.textContent = formattedNum;
+  }
+  
+  if (refs?.progressFillRef.current) {
+    const progressPercentage = ((currentNum - 1) / (totalNum - 1)) * 100;
+    refs.progressFillRef.current.style.width = `${progressPercentage}%`;
+  }
 };
 
 export const updateDebugInfo = (info: string, refs: ShowcaseRefs) => {

@@ -39,26 +39,22 @@ export const resetComponentState = (
     }
   }
 
-  // Reset contador de loading
   if (refs.loadingCounterRef.current) {
     refs.loadingCounterRef.current.textContent = '[00]';
   }
 
-  // Reset elementos das colunas - forçar estado inicial
   setTimeout(() => {
     const artistItems = document.querySelectorAll('.artist');
     const categoryItems = document.querySelectorAll('.category');
     
     artistItems.forEach((item, index) => {
       item.classList.remove('loaded', 'active');
-      // Força reset dos estilos inline para estado inicial
       gsap.set(item, { 
         opacity: 0, 
-        transform: 'translateY(20px)', // Usar o mesmo valor do CSS original
+        transform: 'translateY(20px)',
         clearProps: 'all'
       });
       
-      // Primeiro item sempre deve ficar ativo após o reset
       if (index === 0) {
         setTimeout(() => {
           item.classList.add('active');

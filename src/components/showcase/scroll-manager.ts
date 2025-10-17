@@ -69,25 +69,16 @@ export const setupScrollTriggers = (
     return;
   }
   
-  console.log('🎯 Configurando ScrollTrigger principal...');
   
   // Verificar se os elementos existem
   const fixedSection = document.querySelector('.fixed-section');
   const fixedContainer = document.querySelector('.fixed-container');
-  
-  console.log('🔍 Elementos encontrados:', {
-    fixedSection: !!fixedSection,
-    fixedContainer: !!fixedContainer,
-    fixedSectionHeight: fixedSection?.clientHeight,
-    fixedContainerHeight: fixedContainer?.clientHeight
-  });
-  
+
   gsap.set(refs.fixedContainerRef.current, {
     height: "100vh"
   });
 
   // ScrollTrigger principal
-  console.log('🚀 Criando ScrollTrigger...');
   const scrollTrigger = ScrollTrigger.create({
     trigger: ".fixed-section",
     start: "top top",
@@ -100,7 +91,6 @@ export const setupScrollTriggers = (
       const progress = self.progress;
       const progressDelta = progress - state.lastProgress.current;
       
-      console.log(`📊 ScrollTrigger progress: ${progress.toFixed(3)}`);
       
       // Detectar direção do scroll
       if (Math.abs(progressDelta) > 0.001) {
@@ -112,7 +102,6 @@ export const setupScrollTriggers = (
       
       // Verificar mudança de seção
       if (targetSection !== state.currentSection.current && !state.isAnimating.current) {
-        console.log(`🔄 Mudando de seção ${state.currentSection.current} para ${targetSection}`);
         const nextSection = state.currentSection.current + (targetSection > state.currentSection.current ? 1 : -1);
         snapToSection(nextSection);
       }
@@ -129,7 +118,6 @@ export const setupScrollTriggers = (
     }
   });
   
-  console.log('✅ ScrollTrigger criado:', scrollTrigger);
 
   // End section scroll handling - fixed to prevent overlap
   ScrollTrigger.create({
@@ -241,11 +229,9 @@ export const snapToSection = (
     targetSection === state.currentSection.current ||
     state.isAnimating.current
   ) {
-    console.log(`❌ Snap bloqueado: target=${targetSection}, current=${state.currentSection.current}, animating=${state.isAnimating.current}`);
     return;
   }
   
-  console.log(`✅ Executando snap para seção ${targetSection}`);
   state.isSnapping.current = true;
   changeSection(targetSection);
   
@@ -255,7 +241,6 @@ export const snapToSection = (
     easing: (t: number) => 1 - Math.pow(1 - t, 3),
     lock: true,
     onComplete: () => {
-      console.log(`🏁 Snap concluído para seção ${targetSection}`);
       state.isSnapping.current = false;
     }
   });

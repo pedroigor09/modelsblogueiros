@@ -270,7 +270,6 @@ export default function CreativeShowcase() {
       
       gsap.ticker.lagSmoothing(0);
     } catch (error) {
-      console.log('Lenis not available, using fallback scroll');
     }
   };
 
