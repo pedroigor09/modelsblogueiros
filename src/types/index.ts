@@ -2,6 +2,7 @@ export interface Blogger {
   id: string;
   name: string;
   image: string;
+  nameColor?: string; // Cor específica para o nome (sobrescreve primary)
   colorPalette: {
     primary: string;
     secondary: string;
@@ -9,10 +10,17 @@ export interface Blogger {
   };
   gallery: string[];
   description: string;
+  style: string; // Nicho/estilo específico
+  quote: string; // Frase marcante
+  location?: string;
+  specialty?: string; // Especialidade/diferencial
   instagram?: {
     followers: number;
     username?: string;
+    engagement?: number; // Taxa de engajamento em %
   };
+  verified?: boolean;
+  badge?: string; // Badge especial
 }
 
 export interface MousePosition {

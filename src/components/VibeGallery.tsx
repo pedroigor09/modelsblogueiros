@@ -3,9 +3,11 @@
 import { useRef } from 'react';
 import { motion, useTransform, useScroll } from 'framer-motion';
 import Image from 'next/image';
+import { MapPin, TrendingUp, Award, CheckCircle2, Sparkles } from 'lucide-react';
 import { Blogger } from '../types';
 import InstagramStats from './InstagramStats';
 import GlitchText from './GlitchText';
+import InstagramFeed from './InstagramFeed';
 
 interface VibeGalleryProps {
   blogger: Blogger;
@@ -27,7 +29,6 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
 
   const isEven = index % 2 === 0;
 
-  // Definir efeito de glitch único para cada blogger
   const getGlitchType = (index: number): 'vhs' | 'cassette' | 'neon' | 'retro' | 'cyber' | 'analog' => {
     const effects: Array<'vhs' | 'cassette' | 'neon' | 'retro' | 'cyber' | 'analog'> = [
       'vhs', 'cassette', 'neon', 'retro', 'cyber', 'analog'
@@ -35,7 +36,6 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
     return effects[index % effects.length];
   };
 
-  // Cores personalizadas para glitch baseadas na paleta do blogger
   const getGlitchColors = () => {
     const colors = [
       { primary: '#ff0080', secondary: '#00ffff' }, // Neon Pink/Cyan
@@ -49,16 +49,6 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
   };
 
   const glitchColors = getGlitchColors();
-
-  const quotes = [
-    "Minha moda é minha voz, cada look é uma palavra que escolho falar ao mundo.",
-    "Estilo não é sobre seguir tendências, é sobre criar sua própria história.",
-    "Cada roupa que visto carrega um pedaço da minha alma e da minha cidade.",
-    "Salvador pulsa em cada escolha, cada cor, cada textura que abraço.",
-    "Moda é arte em movimento, e eu sou tanto a tela quanto o pincel."
-  ];
-
-  const quote = quotes[index % quotes.length];
 
   return (
     <motion.section
@@ -82,19 +72,53 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
             transition={{ duration: 1.2, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
-              <GlitchText
-                text={blogger.name}
-                primaryColor={blogger.colorPalette.primary}
-                secondaryColor={glitchColors.secondary}
-                glitchType={getGlitchType(index)}
-                className="text-6xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight mb-4"
-              />
-            </motion.div>
+            {/* Nome com Badge e Verificação */}
+            <div className="relative">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <GlitchText
+                  text={blogger.name}
+                  primaryColor={blogger.nameColor || blogger.colorPalette.primary}
+                  secondaryColor={glitchColors.secondary}
+                  glitchType={getGlitchType(index)}
+                  className="text-6xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight mb-4"
+                />
+              </motion.div>
+              
+              {/* Badges e Verificação */}
+              <div className="flex items-center gap-3 mt-4">
+                {blogger.verified && (
+                  <motion.div
+                    className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500 text-white text-sm font-bold"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.5, type: "spring" }}
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    Verificado
+                  </motion.div>
+                )}
+                
+                {blogger.badge && (
+                  <motion.div
+                    className="flex items-center gap-2 px-3 py-1 rounded-full text-white text-sm font-bold"
+                    style={{
+                      background: `linear-gradient(135deg, ${blogger.colorPalette.primary}, ${blogger.colorPalette.secondary})`,
+                    }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.7, type: "spring" }}
+                  >
+                    <Award className="w-4 h-4" />
+                    {blogger.badge}
+                  </motion.div>
+                )}
+              </div>
+            </div>
             
+            {/* Linha decorativa com estilo */}
             <motion.div 
               className="h-2 rounded-full mb-8"
               style={{ 
@@ -106,6 +130,23 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
               viewport={{ once: true }}
             />
 
+            {/* Estilo/Nicho */}
+            <motion.div
+              className="inline-block px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider"
+              style={{
+                backgroundColor: `${blogger.colorPalette.primary}20`,
+                color: blogger.colorPalette.primary,
+                border: `2px solid ${blogger.colorPalette.primary}`,
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <Sparkles className="inline w-4 h-4 mr-2" />
+              {blogger.style}
+            </motion.div>
+
             <motion.p 
               className="text-2xl lg:text-3xl text-gray-700 leading-relaxed font-light"
               initial={{ opacity: 0, y: 30 }}
@@ -116,11 +157,12 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
               {blogger.description}
             </motion.p>
 
+            {/* Quote - usando a quote do blogger */}
             <motion.blockquote 
               className="relative text-xl lg:text-2xl italic font-medium leading-relaxed pl-8 border-l-4"
               style={{ 
                 borderColor: blogger.colorPalette.secondary,
-                color: blogger.colorPalette.primary 
+                color: blogger.nameColor || blogger.colorPalette.primary 
               }}
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -128,10 +170,34 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
               viewport={{ once: true }}
             >
               <span className="text-4xl absolute -top-2 -left-2 opacity-30">"</span>
-              {quote}
+              {blogger.quote}
               <span className="text-4xl absolute -bottom-6 -right-2 opacity-30">"</span>
             </motion.blockquote>
 
+            {/* Localização e Especialidade */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.0 }}
+              viewport={{ once: true }}
+            >
+              {blogger.location && (
+                <div className="flex items-center gap-2 text-gray-600">
+                  <MapPin className="w-5 h-5" style={{ color: blogger.colorPalette.primary }} />
+                  <span className="font-medium">{blogger.location}</span>
+                </div>
+              )}
+              
+              {blogger.specialty && (
+                <div className="flex items-center gap-2 text-gray-600">
+                  <div className="w-5 h-5 rounded-full" style={{ backgroundColor: blogger.colorPalette.secondary }} />
+                  <span className="font-medium">{blogger.specialty}</span>
+                </div>
+              )}
+            </motion.div>
+
+            {/* Paleta de cores */}
             <motion.div 
               className="flex items-center space-x-6"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -156,10 +222,10 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
               ))}
             </motion.div>
 
-            {/* Instagram Stats */}
+            {/* Instagram Stats com Engajamento */}
             {blogger.instagram && (
               <motion.div
-                className="mt-8"
+                className="mt-8 space-y-3"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 1.3 }}
@@ -169,6 +235,40 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
                   followers={blogger.instagram.followers} 
                   primaryColor={blogger.colorPalette.primary}
                   delay={index * 200}
+                />
+                
+                {blogger.instagram.engagement && (
+                  <motion.div
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 1.5 }}
+                    viewport={{ once: true }}
+                  >
+                    <TrendingUp className="w-6 h-6 text-green-600" />
+                    <div>
+                      <p className="text-sm text-gray-600 font-medium">Taxa de Engajamento</p>
+                      <p className="text-2xl font-bold text-green-600">{blogger.instagram.engagement}%</p>
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+
+            {/* Feed do Instagram */}
+            {blogger.instagram?.username && (
+              <motion.div
+                className="mt-12"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 1.7 }}
+                viewport={{ once: true }}
+              >
+                <InstagramFeed
+                  username={blogger.instagram.username}
+                  primaryColor={blogger.colorPalette.primary}
+                  secondaryColor={blogger.colorPalette.secondary}
+                  maxPosts={6}
                 />
               </motion.div>
             )}

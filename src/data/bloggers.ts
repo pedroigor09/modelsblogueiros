@@ -16,18 +16,26 @@ export const mockBloggers: Blogger[] = [
       '/africanique3.jpg'
     ],
     description: 'Afrofuturismo e elegância',
+    style: 'Afrofuturismo',
+    quote: 'Minha cultura é minha passarela.',
+    location: 'Salvador, BA',
+    specialty: 'Looks afrocentrados',
     instagram: {
-      followers: 540000
-    }
+      followers: 540000,
+      username: 'africanique',
+      engagement: 8.5
+    },
+    verified: true,
+    badge: 'Top Creator'
   },
   {
     id: '2',
     name: 'Deivisson',
     image: '/deivisson.jpg',
     colorPalette: {
-      primary: '#2E86AB',
-      secondary: '#A23B72',
-      tertiary: '#F18F01'
+      primary: '#4A90E2', // Azul
+      secondary: '#FFFFFF', // Branco
+      tertiary: '#8B6F47'  // Marrom
     },
     gallery: [
       '/deivisson1.jpg',
@@ -35,9 +43,16 @@ export const mockBloggers: Blogger[] = [
       '/deivisson3.jpg'
     ],
     description: 'Streetwear com atitude',
+    style: 'Streetwear',
+    quote: 'Estilo não é sobre seguir tendências, é sobre criar sua própria história.',
+    location: 'Salvador, BA',
+    specialty: 'Street style urbano',
     instagram: {
-      followers: 269000
-    }
+      followers: 269000,
+      username: 'deivisson',
+      engagement: 7.2
+    },
+    verified: true,
   },
   {
     id: '3',
@@ -54,18 +69,25 @@ export const mockBloggers: Blogger[] = [
       '/laissa3.jpg'
     ],
     description: 'Feminilidade e poder',
+    style: 'Fashion',
+    quote: 'Empoderamento veste bem em qualquer ocasião.',
+    location: 'Salvador, BA',
+    specialty: 'Looks femininos poderosos',
     instagram: {
-      followers: 138000
+      followers: 138000,
+      username: 'laissa',
+      engagement: 9.1
     }
   },
   {
     id: '4',
     name: 'Kevin',
     image: '/kevin.jpg',
+    nameColor: '#00FFFF', // Ciano vibrante para o nome
     colorPalette: {
-      primary: '#9B59B6',
-      secondary: '#3498DB',
-      tertiary: '#1ABC9C'
+      primary: '#FFFFFF', // Branco
+      secondary: '#00CED1', // Ciano
+      tertiary: '#D2B48C'  // Bege
     },
     gallery: [
       '/kevin.jpg',
@@ -73,18 +95,26 @@ export const mockBloggers: Blogger[] = [
       '/kevin3.jpg'
     ],
     description: 'Vanguarda e criatividade',
+    style: 'Vanguarda',
+    quote: 'Salvador pulsa em cada escolha, cada cor, cada textura que abraço.',
+    location: 'Salvador, BA',
+    specialty: 'Experimentação de texturas',
     instagram: {
-      followers: 317000
-    }
+      followers: 317000,
+      username: 'kevin',
+      engagement: 8.8
+    },
+    verified: true,
+    badge: 'Innovator'
   },
   {
     id: '5',
     name: 'Renatinha',
     image: '/renatinha.jpg',
     colorPalette: {
-      primary: '#FF69B4',
-      secondary: '#FFB6C1',
-      tertiary: '#FFC0CB'
+      primary: '#FF1493', // Pink vibrante
+      secondary: '#FFB6D9', // Rosa claro
+      tertiary: '#FFC8DD'  // Rosa pastel
     },
     gallery: [
       '/renatinha.jpg',
@@ -92,9 +122,17 @@ export const mockBloggers: Blogger[] = [
       '/renatinha3.jpg'
     ],
     description: 'Doçura e personalidade',
+    style: 'Fashion & Lifestyle',
+    quote: 'Moda é arte em movimento, e eu sou tanto a tela quanto o pincel.',
+    location: 'Salvador, BA',
+    specialty: 'Lifestyle fashion',
     instagram: {
-      followers: 711000
-    }
+      followers: 711000,
+      username: 'renatinha',
+      engagement: 10.2
+    },
+    verified: true,
+    badge: 'Top Influencer'
   },
   {
     id: '6',
@@ -111,18 +149,24 @@ export const mockBloggers: Blogger[] = [
       '/thiagovitt3.jpg'
     ],
     description: 'Minimalismo moderno',
+    style: 'Minimal',
+    quote: 'Menos é mais quando você sabe o que importa.',
+    specialty: 'Minimalismo sofisticado',
     instagram: {
-      followers: 67000
+      followers: 67000,
+      username: 'thiagovitt',
+      engagement: 6.8
     }
   },
   {
     id: '7',
     name: 'Luiz Felipe',
     image: '/luizfelipe.jpg',
+    nameColor: '#00BFFF', // Azul choque
     colorPalette: {
-      primary: '#27AE60',
-      secondary: '#2ECC71',
-      tertiary: '#58D68D'
+      primary: '#FFFFFF', // Branco
+      secondary: '#4169E1', // Azul
+      tertiary: '#000000'  // Preto
     },
     gallery: [
       '/luizfelipe.jpg',
@@ -130,18 +174,25 @@ export const mockBloggers: Blogger[] = [
       '/luizfelipe3.jpg'
     ],
     description: 'Estilo urbano e autêntico',
+    style: 'Urban',
+    quote: 'Estilo não é sobre seguir tendências, é sobre criar sua própria história.',
+    location: 'Salvador, BA',
+    specialty: 'Autenticidade urbana',
     instagram: {
-      followers: 205000
+      followers: 205000,
+      username: 'luizfelipe',
+      engagement: 7.5
     }
   },
   {
     id: '8',
     name: 'Suane',
     image: '/suane.jpg',
+    nameColor: '#FFFF00', // Amarelo choque para o nome
     colorPalette: {
-      primary: '#8E44AD',
-      secondary: '#BB8FCE',
-      tertiary: '#D7BDE2'
+      primary: '#FFFFFF', // Branco
+      secondary: '#000000', // Preto
+      tertiary: '#FFD700'  // Ouro
     },
     gallery: [
       '/suane.jpg',
@@ -149,18 +200,26 @@ export const mockBloggers: Blogger[] = [
       '/suane3.jpg'
     ],
     description: 'Sofisticação e charme',
+    style: 'Sofisticação',
+    quote: 'Cada roupa que visto carrega um pedaço da minha alma e da minha cidade.',
+    location: 'Salvador, BA',
+    specialty: 'Elegância urbana',
     instagram: {
-      followers: 552000
-    }
+      followers: 552000,
+      username: 'suane',
+      engagement: 9.4
+    },
+    verified: true,
+    badge: 'Style Icon'
   },
   {
     id: '9',
     name: 'Wallace',
     image: '/wall.jpg',
     colorPalette: {
-      primary: '#E67E22',
-      secondary: '#F39C12',
-      tertiary: '#F7DC6F'
+      primary: '#D97520', // Laranja queimado
+      secondary: '#F39C12', // Laranja médio
+      tertiary: '#F7DC6F'  // Amarelo claro
     },
     gallery: [
       '/wall.jpg',
@@ -168,8 +227,14 @@ export const mockBloggers: Blogger[] = [
       '/wall3.jpg'
     ],
     description: 'Energia e personalidade',
+    style: 'Urban Energy',
+    quote: 'Salvador pulsa em cada escolha, cada cor, cada textura que abraço.',
+    location: 'Salvador, BA',
+    specialty: 'Looks vibrantes',
     instagram: {
-      followers: 77600
+      followers: 77600,
+      username: 'wallace',
+      engagement: 11.3
     }
   },
   {
@@ -177,9 +242,9 @@ export const mockBloggers: Blogger[] = [
     name: 'Ygor',
     image: '/ygor.jpg',
     colorPalette: {
-      primary: '#C0392B',
-      secondary: '#E74C3C',
-      tertiary: '#EC7063'
+      primary: '#90EE90', // Verde claro
+      secondary: '#FF8C00', // Laranja
+      tertiary: '#FFFFFF'  // Branco
     },
     gallery: [
       '/ygor.jpg',
@@ -187,18 +252,26 @@ export const mockBloggers: Blogger[] = [
       '/ygor3.jpg'
     ],
     description: 'Ousadia e inovação',
+    style: 'Bold Fashion',
+    quote: 'Moda é arte em movimento, e eu sou tanto a tela quanto o pincel.',
+    location: 'Salvador, BA',
+    specialty: 'Alta ousadia',
     instagram: {
-      followers: 663000
-    }
+      followers: 203000,
+      username: 'ygor',
+      engagement: 10.2
+    },
+    verified: true,
+    badge: 'Trendsetter'
   },
   {
     id: '11',
     name: 'Rone',
     image: '/rone.jpg',
     colorPalette: {
-      primary: '#16A085',
-      secondary: '#48C9B0',
-      tertiary: '#76D7C4'
+      primary: '#000000', // Preto
+      secondary: '#FFFFFF', // Branco
+      tertiary: '#FF8C00'  // Laranja
     },
     gallery: [
       '/rone.jpg',
@@ -206,18 +279,25 @@ export const mockBloggers: Blogger[] = [
       '/rone3.jpg'
     ],
     description: 'Estilo único e marcante',
+    style: 'Unique',
+    quote: 'Minha moda é minha voz, cada look é uma palavra que escolho falar ao mundo.',
+    location: 'Salvador, BA',
+    specialty: 'Identidade visual forte',
     instagram: {
-      followers: 228000
+      followers: 228000,
+      username: 'rone',
+      engagement: 7.9
     }
   },
   {
     id: '12',
     name: 'Jeferson',
     image: '/jef.jpg',
+    nameColor: '#8B4513', // Marrom choque para o nome
     colorPalette: {
-      primary: '#8B008B',
-      secondary: '#DA70D6',
-      tertiary: '#DDA0DD'
+      primary: '#FFFFFF', // Branco
+      secondary: '#8B4513', // Marrom
+      tertiary: '#F5F5DC'  // Bege claro
     },
     gallery: [
       '/jef.jpg',
@@ -225,8 +305,16 @@ export const mockBloggers: Blogger[] = [
       '/jef3.jpg'
     ],
     description: 'Criatividade sem limites',
+    style: 'Creative',
+    quote: 'Estilo não é sobre seguir tendências, é sobre criar sua própria história.',
+    location: 'Salvador, BA',
+    specialty: 'Experimentação criativa',
     instagram: {
-      followers: 1200000
-    }
+      followers: 1200000,
+      username: 'jeferson',
+      engagement: 12.1
+    },
+    verified: true,
+    badge: 'Mega Influencer'
   }
 ];
