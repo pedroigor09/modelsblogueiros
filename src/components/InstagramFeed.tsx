@@ -52,15 +52,17 @@ export default function InstagramFeed({
         const response = await fetch(`/api/instagram/${username}`);
         
         if (!response.ok) {
-          throw new Error('Erro ao buscar posts do Instagram');
+          // Silently fail and show mock posts
+          setError('API não disponível');
+          return;
         }
         const data: InstagramFeedResponse = await response.json();
         setPosts(data.posts.slice(0, maxPosts));
         setIsMock(data.isMock || false);
         setError(null);
       } catch (err) {
-        console.error('Erro ao carregar feed do Instagram:', err);
-        setError('Não foi possível carregar o feed');
+        // Silently fail and show mock posts
+        setError('API não disponível');
       } finally {
         setLoading(false);
       }
@@ -98,15 +100,250 @@ export default function InstagramFeed({
   }
 
   if (error) {
+    // Mock data com posts cinematográficos
+    const mockPosts = [
+      {
+        id: 'mock1',
+        caption: 'Estilo único em cada detalhe ✨',
+        media_type: 'IMAGE',
+        media_url: '',
+        permalink: `https://instagram.com/${username}`,
+        timestamp: new Date().toISOString(),
+        like_count: Math.floor(Math.random() * 5000) + 1000,
+        comments_count: Math.floor(Math.random() * 500) + 50,
+      },
+      {
+        id: 'mock2',
+        caption: 'Criando tendências, inspirando pessoas 🔥',
+        media_type: 'IMAGE',
+        media_url: '',
+        permalink: `https://instagram.com/${username}`,
+        timestamp: new Date().toISOString(),
+        like_count: Math.floor(Math.random() * 5000) + 1000,
+        comments_count: Math.floor(Math.random() * 500) + 50,
+      },
+      {
+        id: 'mock3',
+        caption: 'Autenticidade é o nosso poder 💫',
+        media_type: 'IMAGE',
+        media_url: '',
+        permalink: `https://instagram.com/${username}`,
+        timestamp: new Date().toISOString(),
+        like_count: Math.floor(Math.random() * 5000) + 1000,
+        comments_count: Math.floor(Math.random() * 500) + 50,
+      },
+    ];
+
     return (
-      <div 
-        className="p-8 rounded-2xl text-center"
-        style={{ 
-          background: `linear-gradient(135deg, ${primaryColor}10, ${secondaryColor}10)`,
-          borderLeft: `4px solid ${primaryColor}`
-        }}
-      >
-        <p className="text-gray-600">{error}</p>
+      <div className="space-y-6">
+        <motion.div
+          className="flex items-center justify-between"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h3 
+            className="text-3xl font-bold"
+            style={{ color: primaryColor }}
+          >
+            📸 Últimos Posts
+            <span className="ml-3 text-xs px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-normal">
+              Preview Mode
+            </span>
+          </h3>
+          <a
+            href={`https://instagram.com/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 overflow-hidden group shine-button"
+            style={{
+              background: `linear-gradient(135deg, ${primaryColor}, ${secondaryColor})`,
+              color: 'white'
+            }}
+          >
+            {/* Force refresh - Animated Border Effect */}
+            <div className="absolute inset-0 rounded-xl overflow-hidden">
+              <div 
+                className="absolute top-0 left-0 w-full h-0.5 animate-slide-right"
+                style={{ 
+                  background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)`
+                }}
+              />
+              <div 
+                className="absolute top-0 right-0 w-0.5 h-full animate-slide-down"
+                style={{ 
+                  background: `linear-gradient(180deg, transparent, rgba(255,255,255,0.8), transparent)`,
+                  animationDelay: '0.25s'
+                }}
+              />
+              <div 
+                className="absolute bottom-0 right-0 w-full h-0.5 animate-slide-left"
+                style={{ 
+                  background: `linear-gradient(270deg, transparent, rgba(255,255,255,0.8), transparent)`,
+                  animationDelay: '0.5s'
+                }}
+              />
+              <div 
+                className="absolute bottom-0 left-0 w-0.5 h-full animate-slide-up"
+                style={{ 
+                  background: `linear-gradient(360deg, transparent, rgba(255,255,255,0.8), transparent)`,
+                  animationDelay: '0.75s'
+                }}
+              />
+            </div>
+
+            {/* Shine Effect */}
+            <div 
+              className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%)',
+                animation: 'shine 2s ease-in-out infinite'
+              }}
+            />
+
+            <span className="relative z-10">Ver perfil</span>
+            <ExternalLink className="w-4 h-4 relative z-10" />
+          </a>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {mockPosts.map((post, index) => (
+            <motion.a
+              key={post.id}
+              href={post.permalink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer cinematic-card"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: index * 0.1,
+                type: "spring"
+              }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+              style={{
+                background: `linear-gradient(135deg, ${primaryColor}40, ${secondaryColor}40, ${primaryColor}20)`,
+                position: 'relative'
+              }}
+            >
+              {/* Animated Border Effect */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                <div 
+                  className="absolute top-0 left-0 w-full h-1 animate-slide-right"
+                  style={{ 
+                    background: `linear-gradient(90deg, transparent, ${primaryColor}, transparent)`,
+                    animationDelay: `${index * 0.2}s`
+                  }}
+                />
+                <div 
+                  className="absolute top-0 right-0 w-1 h-full animate-slide-down"
+                  style={{ 
+                    background: `linear-gradient(180deg, transparent, ${secondaryColor}, transparent)`,
+                    animationDelay: `${index * 0.2 + 0.25}s`
+                  }}
+                />
+                <div 
+                  className="absolute bottom-0 right-0 w-full h-1 animate-slide-left"
+                  style={{ 
+                    background: `linear-gradient(270deg, transparent, ${primaryColor}, transparent)`,
+                    animationDelay: `${index * 0.2 + 0.5}s`
+                  }}
+                />
+                <div 
+                  className="absolute bottom-0 left-0 w-1 h-full animate-slide-up"
+                  style={{ 
+                    background: `linear-gradient(360deg, transparent, ${secondaryColor}, transparent)`,
+                    animationDelay: `${index * 0.2 + 0.75}s`
+                  }}
+                />
+              </div>
+
+              {/* Gradient Background with Animation */}
+              <div 
+                className="absolute inset-2 rounded-xl animate-pulse-glow"
+                style={{
+                  background: `radial-gradient(circle at ${30 + index * 20}% ${40 + index * 15}%, ${primaryColor}60, ${secondaryColor}30, transparent 70%)`,
+                  filter: 'blur(0.5px)'
+                }}
+              />
+
+              {/* Content */}
+              <div className="relative w-full h-full flex flex-col items-center justify-center p-4 text-center z-10">
+                <motion.div
+                  className="text-white space-y-3"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.3 }}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <Heart className="w-6 h-6 fill-white" />
+                    <span className="text-xl font-bold">
+                      {post.like_count?.toLocaleString('pt-BR')}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center justify-center gap-2">
+                    <MessageCircle className="w-6 h-6" />
+                    <span className="text-xl font-bold">
+                      {post.comments_count?.toLocaleString('pt-BR')}
+                    </span>
+                  </div>
+
+                  <p className="text-sm mt-2 font-medium">
+                    {post.caption}
+                  </p>
+                </motion.div>
+              </div>
+
+              {/* Hover Glow Effect */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: `linear-gradient(135deg, ${primaryColor}20, ${secondaryColor}20)`,
+                  boxShadow: `0 0 30px ${primaryColor}40, 0 0 60px ${secondaryColor}20`
+                }}
+                whileHover={{
+                  boxShadow: `0 0 40px ${primaryColor}60, 0 0 80px ${secondaryColor}40`
+                }}
+              />
+            </motion.a>
+          ))}
+        </div>
+
+        <style jsx>{`
+          @keyframes slide-right {
+            0% { transform: translateX(-100%); }
+            50%, 100% { transform: translateX(100%); }
+          }
+          @keyframes slide-down {
+            0% { transform: translateY(-100%); }
+            50%, 100% { transform: translateY(100%); }
+          }
+          @keyframes slide-left {
+            0% { transform: translateX(100%); }
+            50%, 100% { transform: translateX(-100%); }
+          }
+          @keyframes slide-up {
+            0% { transform: translateY(100%); }
+            50%, 100% { transform: translateY(-100%); }
+          }
+          @keyframes pulse-glow {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+          }
+          @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+          }
+          .animate-slide-right { animation: slide-right 2s linear infinite; }
+          .animate-slide-down { animation: slide-down 2s linear infinite; }
+          .animate-slide-left { animation: slide-left 2s linear infinite; }
+          .animate-slide-up { animation: slide-up 2s linear infinite; }
+          .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+        `}</style>
       </div>
     );
   }
@@ -139,14 +376,54 @@ export default function InstagramFeed({
           href={`https://instagram.com/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:scale-105"
+          className="relative flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 overflow-hidden group shine-button"
           style={{
             background: `linear-gradient(135deg, ${primaryColor}, ${secondaryColor})`,
             color: 'white'
           }}
         >
-          Ver perfil
-          <ExternalLink className="w-4 h-4" />
+          {/* Animated Border Effect */}
+          <div className="absolute inset-0 rounded-xl overflow-hidden">
+            <div 
+              className="absolute top-0 left-0 w-full h-0.5 animate-slide-right"
+              style={{ 
+                background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)`
+              }}
+            />
+            <div 
+              className="absolute top-0 right-0 w-0.5 h-full animate-slide-down"
+              style={{ 
+                background: `linear-gradient(180deg, transparent, rgba(255,255,255,0.8), transparent)`,
+                animationDelay: '0.25s'
+              }}
+            />
+            <div 
+              className="absolute bottom-0 right-0 w-full h-0.5 animate-slide-left"
+              style={{ 
+                background: `linear-gradient(270deg, transparent, rgba(255,255,255,0.8), transparent)`,
+                animationDelay: '0.5s'
+              }}
+            />
+            <div 
+              className="absolute bottom-0 left-0 w-0.5 h-full animate-slide-up"
+              style={{ 
+                background: `linear-gradient(360deg, transparent, rgba(255,255,255,0.8), transparent)`,
+                animationDelay: '0.75s'
+              }}
+            />
+          </div>
+
+          {/* Shine Effect */}
+          <div 
+            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%)',
+              animation: 'shine 2s ease-in-out infinite'
+            }}
+          />
+
+          <span className="relative z-10">Ver perfil</span>
+          <ExternalLink className="w-4 h-4 relative z-10" />
         </a>
       </motion.div>
 

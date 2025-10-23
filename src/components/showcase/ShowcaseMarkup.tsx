@@ -43,7 +43,7 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
       <div className="scroll-container" style={{ position: 'relative', backgroundColor: '#fff' }}>
         
         {/* Fixed Section - cria o espaço de scroll */}
-        <div className="fixed-section" style={{ height: '1100vh', position: 'relative', backgroundColor: '#fff' }}>
+        <div className="fixed-section" style={{ height: `${(bloggersData.length + 2) * 100}vh`, position: 'relative', backgroundColor: '#fff' }}>
           
           {/* Fixed Container - fica pinado */}
           <div

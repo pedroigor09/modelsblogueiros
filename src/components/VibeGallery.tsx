@@ -3,11 +3,12 @@
 import { useRef } from 'react';
 import { motion, useTransform, useScroll } from 'framer-motion';
 import Image from 'next/image';
-import { MapPin, TrendingUp, Award, CheckCircle2, Sparkles } from 'lucide-react';
+import { MapPin, TrendingUp } from 'lucide-react';
 import { Blogger } from '../types';
 import InstagramStats from './InstagramStats';
 import GlitchText from './GlitchText';
 import InstagramFeed from './InstagramFeed';
+import { ShineBadge } from './ShineBadge';
 
 interface VibeGalleryProps {
   blogger: Blogger;
@@ -88,31 +89,46 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
               </motion.div>
               
               {/* Badges e Verificação */}
-              <div className="flex items-center gap-3 mt-4">
+              <div className="flex items-center gap-3 mt-4 flex-wrap">
                 {blogger.verified && (
                   <motion.div
-                    className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500 text-white text-sm font-bold"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.5, type: "spring" }}
                   >
-                    <CheckCircle2 className="w-4 h-4" />
-                    Verificado
+                    <ShineBadge 
+                      type="verified" 
+                      size="md"
+                    />
                   </motion.div>
                 )}
                 
                 {blogger.badge && (
                   <motion.div
-                    className="flex items-center gap-2 px-3 py-1 rounded-full text-white text-sm font-bold"
-                    style={{
-                      background: `linear-gradient(135deg, ${blogger.colorPalette.primary}, ${blogger.colorPalette.secondary})`,
-                    }}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.7, type: "spring" }}
                   >
-                    <Award className="w-4 h-4" />
-                    {blogger.badge}
+                    <ShineBadge 
+                      type="badge" 
+                      text={blogger.badge} 
+                      size="md"
+                    />
+                  </motion.div>
+                )}
+                
+                {/* Badge especial para specialties únicas */}
+                {blogger.specialty && ['Minimalismo sofisticado'].includes(blogger.specialty) && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.9, type: "spring" }}
+                  >
+                    <ShineBadge 
+                      type="badge" 
+                      text={blogger.specialty} 
+                      size="sm"
+                    />
                   </motion.div>
                 )}
               </div>
@@ -132,19 +148,16 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
 
             {/* Estilo/Nicho */}
             <motion.div
-              className="inline-block px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider"
-              style={{
-                backgroundColor: `${blogger.colorPalette.primary}20`,
-                color: blogger.colorPalette.primary,
-                border: `2px solid ${blogger.colorPalette.primary}`,
-              }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
               viewport={{ once: true }}
             >
-              <Sparkles className="inline w-4 h-4 mr-2" />
-              {blogger.style}
+              <ShineBadge 
+                type="style" 
+                text={blogger.style} 
+                size="md"
+              />
             </motion.div>
 
             <motion.p 
@@ -162,7 +175,10 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
               className="relative text-xl lg:text-2xl italic font-medium leading-relaxed pl-8 border-l-4"
               style={{ 
                 borderColor: blogger.colorPalette.secondary,
-                color: blogger.nameColor || blogger.colorPalette.primary 
+                color: blogger.quoteColor ? 'transparent' : (blogger.nameColor || blogger.colorPalette.primary),
+                background: blogger.quoteColor ? blogger.quoteColor : 'transparent',
+                WebkitBackgroundClip: blogger.quoteColor ? 'text' : 'initial',
+                backgroundClip: blogger.quoteColor ? 'text' : 'initial'
               }}
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}

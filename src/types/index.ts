@@ -3,6 +3,7 @@ export interface Blogger {
   name: string;
   image: string;
   nameColor?: string; // Cor específica para o nome (sobrescreve primary)
+  quoteColor?: string; // Cor específica para a quote (pode ser degradê)
   colorPalette: {
     primary: string;
     secondary: string;

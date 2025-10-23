@@ -4,6 +4,10 @@ import { SplitText } from 'gsap/SplitText';
 import { ShowcaseRefs, ShowcaseState } from './types';
 import { bloggersData } from './data';
 
+// Variáveis para controle de throttling
+let lastSectionChangeTime = 0;
+const SECTION_CHANGE_DELAY = 600; // Mínimo de 600ms entre mudanças de seção
+
 export const setupSectionPositions = (state: ShowcaseState) => {
   const fixedSectionElement = document.querySelector('.fixed-section') as HTMLElement;
   if (!fixedSectionElement) return;
@@ -91,42 +95,80 @@ export const setupScrollTriggers = (
       const progress = self.progress;
       const progressDelta = progress - state.lastProgress.current;
       
-      
       // Detectar direção do scroll
       if (Math.abs(progressDelta) > 0.001) {
         state.scrollDirection.current = progressDelta > 0 ? 1 : -1;
       }
       
       // Calcular seção atual baseado no número de bloggers
-      const targetSection = Math.min(bloggersData.length - 1, Math.floor(progress * bloggersData.length));
+      const maxSection = bloggersData.length - 1;
+      // Ajustar para que cada seção tenha espaço adequado
+      const sectionsProgress = Math.min(0.95, progress); // Limitar a 95% para dar mais espaço
+      const targetSection = Math.min(maxSection, Math.floor(sectionsProgress * bloggersData.length));
       
-      // Verificar mudança de seção
-      if (targetSection !== state.currentSection.current && !state.isAnimating.current) {
-        const nextSection = state.currentSection.current + (targetSection > state.currentSection.current ? 1 : -1);
-        snapToSection(nextSection);
+      // Controle mais rigoroso de mudança de seção com throttling
+      const currentTime = Date.now();
+      const canChangeSection = currentTime - lastSectionChangeTime > SECTION_CHANGE_DELAY;
+      
+      if (targetSection !== state.currentSection.current && !state.isAnimating.current && canChangeSection) {
+        // Prevenir saltos de seção - apenas mudanças sequenciais
+        const diff = targetSection - state.currentSection.current;
+        let nextSection = state.currentSection.current;
+        
+        if (Math.abs(diff) === 1) {
+          // Mudança sequencial normal
+          nextSection = targetSection;
+        } else if (Math.abs(diff) > 1) {
+          // Tentativa de pular seções - ir apenas para a próxima
+          nextSection = state.currentSection.current + (diff > 0 ? 1 : -1);
+        }
+        
+        // Garantir que não saia dos limites
+        nextSection = Math.max(0, Math.min(maxSection, nextSection));
+        
+        // Só mudar se for diferente da atual
+        if (nextSection !== state.currentSection.current) {
+          lastSectionChangeTime = currentTime;
+          snapToSection(nextSection);
+        }
       }
       
       state.lastProgress.current = progress;
       
-      // Atualizar barra de progresso
-      const sectionProgress = state.currentSection.current / (bloggersData.length - 1);
+      // Atualizar barra de progresso baseada na seção atual
+      const sectionProgressBar = Math.min(1, state.currentSection.current / maxSection);
       if (refs.progressFillRef.current) {
-        refs.progressFillRef.current.style.width = `${sectionProgress * 100}%`;
+        refs.progressFillRef.current.style.width = `${sectionProgressBar * 100}%`;
       }
       
-      updateDebugInfo(`Section: ${state.currentSection.current}, Target: ${targetSection}, Progress: ${progress.toFixed(3)}, Direction: ${state.scrollDirection.current}`);
+      updateDebugInfo(`Section: ${state.currentSection.current}/${maxSection}, Target: ${targetSection}, Progress: ${progress.toFixed(3)}, Delta: ${progressDelta.toFixed(4)}`);
     }
   });
   
 
-  // End section scroll handling - fixed to prevent overlap
+  // End section scroll handling - só ativa após todos os blogueiros
   ScrollTrigger.create({
     trigger: ".end-section",
-    start: "top center",
+    start: "top bottom-=50",
     end: "bottom bottom",
     onUpdate: (self) => {
-      // Handle blur effects first (always execute)
-      if (self.progress > 0.1) {
+      // Só permitir transição se estivermos na última seção dos blogueiros
+      const isLastBloggerSection = state.currentSection.current >= bloggersData.length - 1;
+      
+      // Se não estivermos na última seção e o usuário estiver tentando scrollar muito rápido
+      if (!isLastBloggerSection && self.progress > 0.05) {
+        // Força voltar para a última seção de blogueiros
+        const lastSection = bloggersData.length - 1;
+        snapToSection(lastSection);
+        return;
+      }
+      
+      // Só permitir efeitos de transição se estivermos realmente na última seção
+      // E se o progress for significativo (para evitar ativação prematura)
+      const shouldActivateTransition = isLastBloggerSection && self.progress > 0.2;
+      
+      // Handle blur effects
+      if (shouldActivateTransition) {
         refs.footerRef.current?.classList.add("blur");
         refs.leftColumnRef.current?.classList.add("blur");
         refs.rightColumnRef.current?.classList.add("blur");
@@ -138,11 +180,13 @@ export const setupScrollTriggers = (
         refs.featuredRef.current?.classList.remove("blur");
       }
       
-      // Only start unpinning when we're actually in the end section
-      if (self.progress > 0.1) {
+      // Only start unpinning when we're actually in the end section AND last blogger section
+      // E com um threshold maior para garantir que o Jeferson seja visto completamente
+      if (self.progress > 0.3 && isLastBloggerSection) {
+        const adjustedProgress = (self.progress - 0.3) / 0.7; // Normalizar para 0-1
         const newHeight = Math.max(
           0,
-          100 - ((self.progress - 0.1) / 0.9) * 100
+          100 - adjustedProgress * 100
         );
         
         if (refs.fixedContainerRef.current) {
@@ -153,7 +197,7 @@ export const setupScrollTriggers = (
           });
         }
         
-        const moveY = (-(self.progress - 0.1) / 0.9) * 200;
+        const moveY = -adjustedProgress * 200;
         
         if (refs.headerRef.current) {
           gsap.to(refs.headerRef.current, {
@@ -179,7 +223,7 @@ export const setupScrollTriggers = (
           });
         }
       } else {
-        // Reset positions when scrolling back up
+        // Reset positions when scrolling back up or not in last section
         if (refs.fixedContainerRef.current) {
           gsap.to(refs.fixedContainerRef.current, {
             height: "100vh",
@@ -213,7 +257,7 @@ export const setupScrollTriggers = (
         }
       }
       
-      updateDebugInfo(`End Section - Height: ${refs.fixedContainerRef.current?.style.height}, Progress: ${self.progress.toFixed(2)}`);
+      updateDebugInfo(`End Section - Height: ${refs.fixedContainerRef.current?.style.height}, Progress: ${self.progress.toFixed(2)}, Last Section: ${isLastBloggerSection}, Current: ${state.currentSection.current}`);
     }
   });
 };
@@ -223,9 +267,12 @@ export const snapToSection = (
   state: ShowcaseState,
   changeSection: (newSection: number) => void
 ) => {
+  const maxSection = bloggersData.length - 1;
+  
+  // Validar limites da seção
   if (
     targetSection < 0 ||
-    targetSection >= bloggersData.length ||
+    targetSection > maxSection ||
     targetSection === state.currentSection.current ||
     state.isAnimating.current
   ) {
@@ -235,13 +282,23 @@ export const snapToSection = (
   state.isSnapping.current = true;
   changeSection(targetSection);
   
-  const targetPosition = state.sectionPositions.current[targetSection];
-  (state.lenis.current as any)?.scrollTo(targetPosition, {
-    duration: 0.6,
-    easing: (t: number) => 1 - Math.pow(1 - t, 3),
-    lock: true,
-    onComplete: () => {
-      state.isSnapping.current = false;
-    }
-  });
+  // Calcular posição baseada na seção atual com mais precisão
+  const sectionProgress = targetSection / maxSection;
+  const fixedSection = document.querySelector('.fixed-section') as HTMLElement;
+  
+  if (fixedSection) {
+    const fixedSectionHeight = fixedSection.offsetHeight;
+    // Ajustar para que o Jeferson tenha mais espaço
+    const adjustedProgress = sectionProgress * 0.85; // Usar apenas 85% do espaço total
+    const targetPosition = fixedSection.offsetTop + (adjustedProgress * fixedSectionHeight);
+    
+    (state.lenis.current as any)?.scrollTo(targetPosition, {
+      duration: 0.8, // Aumentar duração para mais suavidade
+      easing: (t: number) => 1 - Math.pow(1 - t, 4), // Easing mais suave
+      lock: true,
+      onComplete: () => {
+        state.isSnapping.current = false;
+      }
+    });
+  }
 };

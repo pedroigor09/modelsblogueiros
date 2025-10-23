@@ -49,7 +49,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Street style urbano',
     instagram: {
       followers: 269000,
-      username: 'deivisson',
+      username: 'deivisson03',
       engagement: 7.2
     },
     verified: true,
@@ -75,7 +75,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Looks femininos poderosos',
     instagram: {
       followers: 138000,
-      username: 'laissa',
+      username: 'L4issa',
       engagement: 9.1
     }
   },
@@ -101,7 +101,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Experimentação de texturas',
     instagram: {
       followers: 317000,
-      username: 'kevin',
+      username: 'kevinkarmo',
       engagement: 8.8
     },
     verified: true,
@@ -128,7 +128,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Lifestyle fashion',
     instagram: {
       followers: 711000,
-      username: 'renatinha',
+      username: 'renatinhaap',
       engagement: 10.2
     },
     verified: true,
@@ -156,7 +156,9 @@ export const mockBloggers: Blogger[] = [
       followers: 67000,
       username: 'thiagovitt',
       engagement: 6.8
-    }
+    },
+    verified: true,
+    badge: 'Clean Aesthetic'
   },
   {
     id: '7',
@@ -180,7 +182,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Autenticidade urbana',
     instagram: {
       followers: 205000,
-      username: 'luizfelipe',
+      username: 'lfcerq',
       engagement: 7.5
     }
   },
@@ -189,6 +191,7 @@ export const mockBloggers: Blogger[] = [
     name: 'Suane',
     image: '/suane.jpg',
     nameColor: '#FFFF00', // Amarelo choque para o nome
+    quoteColor: 'linear-gradient(135deg, #000000, #FFD700, #000000)', // Degradê preto-ouro-preto
     colorPalette: {
       primary: '#FFFFFF', // Branco
       secondary: '#000000', // Preto
@@ -206,7 +209,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Elegância urbana',
     instagram: {
       followers: 552000,
-      username: 'suane',
+      username: 'suaneff',
       engagement: 9.4
     },
     verified: true,
@@ -233,7 +236,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Looks vibrantes',
     instagram: {
       followers: 77600,
-      username: 'wallace',
+      username: 'wallace.rn',
       engagement: 11.3
     }
   },
@@ -258,7 +261,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Alta ousadia',
     instagram: {
       followers: 203000,
-      username: 'ygor',
+      username: 'ygoralbuu',
       engagement: 10.2
     },
     verified: true,
@@ -285,7 +288,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Identidade visual forte',
     instagram: {
       followers: 228000,
-      username: 'rone',
+      username: 'rone_lima',
       engagement: 7.9
     }
   },
@@ -311,7 +314,7 @@ export const mockBloggers: Blogger[] = [
     specialty: 'Experimentação criativa',
     instagram: {
       followers: 1200000,
-      username: 'jeferson',
+      username: 'jefersonsantos._',
       engagement: 12.1
     },
     verified: true,

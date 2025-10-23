@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { Blogger } from '@/types';
-import { Instagram, MapPin, TrendingUp, Award, CheckCircle2 } from 'lucide-react';
+import { Instagram, MapPin, TrendingUp } from 'lucide-react';
+import { ShineBadge } from './ShineBadge';
 
 interface BloggerCardProps {
   blogger: Blogger;
@@ -58,24 +59,22 @@ export const BloggerCard = ({ blogger, isActive, onClick }: BloggerCardProps) =>
 
         {/* Badge no topo */}
         {blogger.badge && (
-          <motion.div
-            className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white backdrop-blur-md"
-            style={{
-              background: `linear-gradient(135deg, ${blogger.colorPalette.primary}, ${blogger.colorPalette.secondary})`,
-            }}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Award className="inline w-3 h-3 mr-1" />
-            {blogger.badge}
-          </motion.div>
+          <div className="absolute top-3 right-3">
+            <ShineBadge 
+              type="badge" 
+              text={blogger.badge} 
+              size="sm"
+            />
+          </div>
         )}
 
         {/* Verificado */}
         {blogger.verified && (
-          <div className="absolute top-3 left-3 bg-blue-500 rounded-full p-1">
-            <CheckCircle2 className="w-4 h-4 text-white" />
+          <div className="absolute top-3 left-3">
+            <ShineBadge 
+              type="verified" 
+              size="sm"
+            />
           </div>
         )}
       </div>
