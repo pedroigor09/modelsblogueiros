@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SmoothScrollWrapper } from "@/components/SmoothScrollWrapper";
+import { BaianoModeProvider } from "@/contexts/BaianoModeContext";
+import BaianoButton from "@/components/BaianoButton";
+import BaianoEffects from "@/components/BaianoEffects";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,9 +37,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SmoothScrollWrapper>
-          {children}
-        </SmoothScrollWrapper>
+        <BaianoModeProvider>
+          <SmoothScrollWrapper>
+            {children}
+          </SmoothScrollWrapper>
+          <BaianoButton />
+          <BaianoEffects />
+        </BaianoModeProvider>
       </body>
     </html>
   );
