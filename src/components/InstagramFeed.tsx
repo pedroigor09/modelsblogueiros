@@ -46,29 +46,18 @@ export default function InstagramFeed({
       return;
     }
 
-    const fetchInstagramPosts = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/instagram/${username}`);
-        
-        if (!response.ok) {
-          // Silently fail and show mock posts
-          setError('API não disponível');
-          return;
-        }
-        const data: InstagramFeedResponse = await response.json();
-        setPosts(data.posts.slice(0, maxPosts));
-        setIsMock(data.isMock || false);
-        setError(null);
-      } catch (err) {
-        // Silently fail and show mock posts
-        setError('API não disponível');
-      } finally {
-        setLoading(false);
-      }
+    // Sempre usar mocks - simulando carregamento
+    const loadMockData = async () => {
+      setLoading(true);
+      
+      // Simular delay de carregamento para UX
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      setError('Usando dados demonstrativos');
+      setLoading(false);
     };
 
-    fetchInstagramPosts();
+    loadMockData();
   }, [username, maxPosts]);
 
   if (!username) {

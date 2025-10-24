@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  trailingSlash: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -9,32 +12,11 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'scontent.cdninstagram.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'scontent-*.cdninstagram.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.cdninstagram.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'graph.instagram.com',
-        port: '',
-        pathname: '/**',
-      },
     ],
   },
+  // Configuração para GitHub Pages
+  basePath: process.env.NODE_ENV === 'production' ? '/modelsblogueiros' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/modelsblogueiros/' : '',
 };
 
 export default nextConfig;

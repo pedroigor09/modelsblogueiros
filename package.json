@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "export": "next build && next export",
+    "deploy": "npm run export && touch out/.nojekyll"
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
