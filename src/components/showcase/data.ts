@@ -1,4 +1,5 @@
 import { Blogger } from './types';
+import { getAssetPath } from '@/utils/paths';
 
 export const bloggersData: Blogger[] = [
   {
@@ -6,7 +7,7 @@ export const bloggersData: Blogger[] = [
     name: "Africanique",
     category: "Afrofuturism",
     featured: "Fashion Revolution",
-    image: "/africanique.jpg",
+    image: getAssetPath("/africanique.jpg"),
     active: true
   },
   {
@@ -14,83 +15,83 @@ export const bloggersData: Blogger[] = [
     name: "Deivisson",
     category: "Street Style",
     featured: "Urban Vibes",
-    image: "/deivisson1.jpg"
+    image: getAssetPath("/deivisson1.jpg")
   },
   {
     id: 2,
     name: "Laissa",
     category: "Minimalism",
     featured: "Clean Aesthetics",
-    image: "/laissa.jpg"
+    image: getAssetPath("/laissa.jpg")
   },
   {
     id: 3,
     name: "Kevin",
     category: "Editorial",
     featured: "High Fashion",
-    image: "/kevin.jpg"
+    image: getAssetPath("/kevin.jpg")
   },
   {
     id: 4,
     name: "Renatinha",
     category: "Vintage",
     featured: "Retro Dreams",
-    image: "/renatinha.jpg"
+    image: getAssetPath("/renatinha.jpg")
   },
   {
     id: 5,
     name: "Thiago Vitt",
     category: "Avant-garde",
     featured: "Art Direction",
-    image: "/thiagovitt.jpg"
+    image: getAssetPath("/thiagovitt.jpg")
   },
   {
     id: 6,
     name: "Suane",
     category: "Chic Style",
     featured: "Elegance Redefined",
-    image: "/suane.jpg"
+    image: getAssetPath("/suane.jpg")
   },
   {
     id: 7,
     name: "Luiz Felipe",
     category: "Contemporary",
     featured: "Modern Edge",
-    image: "/luizfelipe.jpg"
+    image: getAssetPath("/luizfelipe.jpg")
   },
   {
     id: 8,
     name: "Ygor",
     category: "Bold Fashion",
     featured: "Creative Expression",
-    image: "/ygor.jpg"
+    image: getAssetPath("/ygor.jpg")
   },
   {
     id: 9,
     name: "Rone",
     category: "Unique Style",
     featured: "Distinctive Look",
-    image: "/rone.jpg"
+    image: getAssetPath("/rone.jpg")
   },
   {
     id: 10,
     name: "Jeferson",
     category: "Creative Vision",
     featured: "Unlimited Style",
-    image: "/jef.jpg"
+    image: getAssetPath("/jef.jpg")
   },
   {
     id: 11,
     name: "Jonathan Silva",
     category: "Street Style",
     featured: "Urban Authenticity",
-    image: "/jn.jpg"
+    image: getAssetPath("/jn.jpg")
   },
   {
     id: 12,
     name: "Matheus Santos",
     category: "Sophisticated",
     featured: "Modern Elegance",
-    image: "/math1.jpg"
+    image: getAssetPath("/math1.jpg")
   }
 ];

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
+import { getAssetPath } from '@/utils/paths';
 
 interface BaianoModeContextType {
   isBaianoMode: boolean;
@@ -17,7 +18,7 @@ export function BaianoModeProvider({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     // Precarregar o áudio
-    audioRef.current = new Audio('/reidosfaixa.mp3');
+    audioRef.current = new Audio(getAssetPath('/reidosfaixa.mp3'));
     audioRef.current.loop = true;
     audioRef.current.volume = 0.7;
   }, []);
