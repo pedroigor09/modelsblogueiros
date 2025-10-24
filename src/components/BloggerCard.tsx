@@ -100,10 +100,14 @@ export const BloggerCard = ({ blogger, isActive, onClick }: BloggerCardProps) =>
           </p>
 
           {/* Quote em itálico */}
-          <p className="text-xs italic text-gray-500 mb-3 line-clamp-2 border-l-2 pl-2"
-            style={{ borderColor: blogger.colorPalette.secondary }}>
-            "{blogger.quote}"
-          </p>
+          <motion.blockquote 
+            className="relative text-xs italic text-gray-500 mb-3 line-clamp-2 border-l-2 pl-4"
+            style={{ borderColor: blogger.colorPalette.secondary }}
+          >
+            <span className="absolute -top-1 -left-1 text-2xl opacity-30">&ldquo;</span>
+            {blogger.quote.length > 80 ? blogger.quote.substring(0, 80) + '...' : blogger.quote}
+            <span className="absolute -bottom-3 -right-1 text-2xl opacity-30">&rdquo;</span>
+          </motion.blockquote>
         </div>
 
         {/* Stats e Info */}

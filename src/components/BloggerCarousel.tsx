@@ -122,7 +122,7 @@ export const BloggerCarousel = ({ bloggers, onBloggerChange }: BloggerCarouselPr
           viewport={{ once: true }}
         >
           <p className="text-lg text-gray-600 italic">
-            "Cada estilo conta uma história, cada look reflete uma alma"
+            &ldquo;Cada estilo conta uma história, cada look reflete uma alma&rdquo;
           </p>
         </motion.div>
       </div>

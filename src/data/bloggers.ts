@@ -319,5 +319,61 @@ export const mockBloggers: Blogger[] = [
     },
     verified: true,
     badge: 'Mega Influencer'
+  },
+  {
+    id: '13',
+    name: 'Jonathan Silva',
+    image: '/jn.jpg',
+    nameColor: '#FF6B35', // Laranja vibrante para o nome
+    colorPalette: {
+      primary: '#FF6B35', // Laranja vibrante
+      secondary: '#004E89', // Azul marinho
+      tertiary: '#FFFFFF'  // Branco
+    },
+    gallery: [
+      '/jn.jpg',
+      '/jn2.jpg',
+      '/jn3.jpg'
+    ],
+    description: 'Estilo urbano e autêntico',
+    style: 'Street Style',
+    quote: 'Autenticidade é o que nos diferencia na multidão.',
+    location: 'Salvador, BA',
+    specialty: 'Street fashion',
+    instagram: {
+      followers: 485000,
+      username: 'jnathanl8',
+      engagement: 8.7
+    },
+    verified: true,
+    badge: 'Style Pioneer'
+  },
+  {
+    id: '14',
+    name: 'Matheus Santos',
+    image: '/math1.jpg',
+    nameColor: '#9B59B6', // Roxo vibrante para o nome
+    colorPalette: {
+      primary: '#9B59B6', // Roxo
+      secondary: '#F39C12', // Dourado
+      tertiary: '#2C3E50'  // Azul escuro
+    },
+    gallery: [
+      '/math1.jpg',
+      '/math2.jpg',
+      '/math3.jpg'
+    ],
+    description: 'Elegância moderna e sofisticada',
+    style: 'Sophisticated',
+    quote: 'A moda é a armadura para sobreviver à realidade do dia a dia.',
+    location: 'Salvador, BA',
+    specialty: 'Looks sofisticados',
+    instagram: {
+      followers: 327000,
+      username: 'm4theuscalasass_',
+      engagement: 9.2
+    },
+    verified: true,
+    badge: 'Fashion Forward'
   }
 ];

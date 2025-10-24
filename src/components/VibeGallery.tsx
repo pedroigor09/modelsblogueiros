@@ -185,9 +185,9 @@ export default function VibeGallery({ blogger, index }: VibeGalleryProps) {
               transition={{ duration: 1, delay: 0.9 }}
               viewport={{ once: true }}
             >
-              <span className="text-4xl absolute -top-2 -left-2 opacity-30">"</span>
+              <span className="text-4xl absolute -top-2 -left-2 opacity-30">&ldquo;</span>
               {blogger.quote}
-              <span className="text-4xl absolute -bottom-6 -right-2 opacity-30">"</span>
+              <span className="text-4xl absolute -bottom-6 -right-2 opacity-30">&rdquo;</span>
             </motion.blockquote>
 
             {/* Localização e Especialidade */}

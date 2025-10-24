@@ -92,9 +92,10 @@ export const ParallaxTransition = () => {
             <motion.div
               key={word.text}
               className="floating-word text-center"
-              style={{
-                y: useTransform(scrollYProgress, [0, 1], [0, -30 * (index % 3 + 1)])
-              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              viewport={{ once: true }}
             >
               <h3 
                 className="text-3xl md:text-5xl font-bold mb-4"

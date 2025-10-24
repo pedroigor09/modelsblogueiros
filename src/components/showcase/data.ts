@@ -78,5 +78,19 @@ export const bloggersData: Blogger[] = [
     category: "Creative Vision",
     featured: "Unlimited Style",
     image: "/jef.jpg"
+  },
+  {
+    id: 11,
+    name: "Jonathan Silva",
+    category: "Street Style",
+    featured: "Urban Authenticity",
+    image: "/jn.jpg"
+  },
+  {
+    id: 12,
+    name: "Matheus Santos",
+    category: "Sophisticated",
+    featured: "Modern Elegance",
+    image: "/math1.jpg"
   }
 ];
