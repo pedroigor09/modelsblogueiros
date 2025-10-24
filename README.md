@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌟 Models Blogueiros - Portfolio Interativo
 
-## Getting Started
+## 🚀 Deploy Status
+✅ **LIVE:** https://pedroigor09.github.io/modelsblogueiros
 
-First, run the development server:
+## 🎭 Recursos Implementados
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 💎 **ShineBadge System**
+- Badges personalizados com gradientes únicos
+- Animações de brilho e rotação
+- 12+ tipos diferentes: Top Creator, Style Icon, Trendsetter...
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🎊 **Modo Baiano Épico**
+- Botão flutuante estilo Rockstar Games
+- 25+ partículas animadas
+- Efeitos cinematográficos com filtros
+- Áudio "Rei dos Faixa" integrado
+- Tremor de tela sincronizado
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 👥 **14 Bloggers de Salvador**
+1. **Africanique** - Afrofuturismo e elegância
+2. **Deivisson** - Streetwear com atitude  
+3. **Laissa** - Feminilidade e poder
+4. **Kevin** - Vanguarda e criatividade
+5. **Renatinha** - Doçura e personalidade
+6. **Thiago Vitt** - Minimalismo moderno
+7. **Luiz Felipe** - Estilo urbano e autêntico
+8. **Suane** - Sofisticação e charme
+9. **Wallace** - Energia e personalidade
+10. **Ygor** - Ousadia e inovação
+11. **Rone** - Estilo único e marcante
+12. **Jeferson** - Criatividade sem limites
+13. **Jonathan Silva** - Street Style Pioneer
+14. **Matheus Santos** - Elegância moderna
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🎨 **Interface Cinematográfica**
+- Carrossel interativo com scroll controlado
+- Transições suaves inspiradas em filmes
+- Sistema de cores personalizado por blogger
+- Galeria de imagens com efeitos parallax
 
-## Learn More
+### 📱 **Instagram Integration (Mock)**
+- Posts estilizados sem dependência de API
+- Dados realistas de followers e engagement
+- Links diretos para perfis do Instagram
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ **Stack Tecnológico**
+- **Next.js 15.5.5** - Framework React otimizado
+- **GSAP & ScrollTrigger** - Animações profissionais
+- **Framer Motion** - Animações React
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Estilização utilitária
+- **Lenis** - Smooth scroll
+- **GitHub Pages** - Hospedagem estática
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 **Performance**
+- ✅ Build otimizado para produção
+- ✅ Lazy loading de imagens
+- ✅ Compressão automática
+- ✅ Static Site Generation (SSG)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🔗 **Acesse:** https://pedroigor09.github.io/modelsblogueiros
