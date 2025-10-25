@@ -181,8 +181,8 @@ export const showcaseStyles = `
   @media (max-width: 768px) {
     .content {
       flex-direction: column;
-      gap: 3vh;
-      top: 60% !important;
+      gap: 2vh;
+      top: 70% !important;
       transform: translateY(-50%) !important;
       padding: 0 1rem !important;
     }
@@ -196,37 +196,39 @@ export const showcaseStyles = `
 
     .left-column,
     .right-column {
-      gap: 1rem !important;
+      gap: 0.8rem !important;
     }
 
     .artist,
     .category {
-      font-size: 1.4rem !important;
-      padding: 0.5rem 0 !important;
-      line-height: 1.2 !important;
+      font-size: 1.3rem !important;
+      padding: 0.3rem 0 !important;
+      line-height: 1.1 !important;
     }
 
     .featured {
-      font-size: 4vw !important;
+      font-size: 3.5vw !important;
       order: -1;
       margin-bottom: 1vh;
-      height: 6vh !important;
+      height: 5vh !important;
     }
 
     .featured-content h3 {
-      font-size: 1.1rem !important;
+      font-size: 1rem !important;
       white-space: normal !important;
-      line-height: 1.3 !important;
+      line-height: 1.2 !important;
     }
 
     .header {
-      font-size: 12vw !important;
-      padding-top: 3vh !important;
+      font-size: 10vw !important;
+      padding-top: 2vh !important;
+      line-height: 0.9 !important;
     }
 
     .footer {
-      font-size: 12vw !important;
-      padding-bottom: 3vh !important;
+      font-size: 10vw !important;
+      padding-bottom: 2vh !important;
+      line-height: 0.9 !important;
     }
 
     .progress-indicator {
