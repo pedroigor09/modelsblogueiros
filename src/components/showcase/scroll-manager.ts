@@ -16,6 +16,20 @@ export const setupSectionPositions = (state: ShowcaseState) => {
   const fixedSectionElement = document.querySelector('.fixed-section') as HTMLElement;
   if (!fixedSectionElement) return;
   
+  // Detectar se é mobile para ajustar altura da seção
+  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+  
+  if (isMobile) {
+    // 📱 Mobile: altura normal sem espaço extra para scroll livre
+    fixedSectionElement.style.height = '100vh';
+    console.log('📱 Mobile: Fixed section ajustada para 100vh (sem espaço extra)');
+  } else {
+    // 🖥️ Desktop: altura expandida para criar espaço de scroll do carrossel
+    const totalHeight = (bloggersData.length + 2) * 100;
+    fixedSectionElement.style.height = `${totalHeight}vh`;
+    console.log(`🖥️ Desktop: Fixed section ajustada para ${totalHeight}vh (com espaço de scroll)`);
+  }
+  
   const fixedSectionTop = fixedSectionElement.offsetTop;
   const fixedSectionHeight = fixedSectionElement.offsetHeight;
   
@@ -27,7 +41,7 @@ export const setupSectionPositions = (state: ShowcaseState) => {
   sectionPositions = [];
   
   // Calcular posições exatas como no template original
-  const totalSections = bloggersData.length; // 13 seções (0-12)
+  const totalSections = bloggersData.length;
   for (let i = 0; i < totalSections; i++) {
     sectionPositions.push(fixedSectionTop + (fixedSectionHeight * i) / totalSections);
   }
