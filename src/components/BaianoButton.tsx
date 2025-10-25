@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Music } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import { useBaianoMode } from '@/contexts/BaianoModeContext';
 
 export default function BaianoButton() {
@@ -10,182 +10,93 @@ export default function BaianoButton() {
   return (
     <motion.div
       className="fixed right-6 bottom-6 z-50"
-      initial={{ x: 100, y: 100, opacity: 0 }}
-      animate={{ x: 0, y: 0, opacity: 1 }}
-      transition={{ delay: 1, type: "spring", stiffness: 100 }}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 2, type: "spring", stiffness: 200, damping: 20 }}
     >
       <motion.button
         onClick={toggleBaianoMode}
         disabled={isTransitioning}
         className={`
-          relative group overflow-hidden rounded-xl p-4 font-bold text-white shadow-2xl
-          transition-all duration-500 transform-gpu
+          relative group w-14 h-14 rounded-full backdrop-blur-md border transition-all duration-300
           ${isBaianoMode 
-            ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500' 
-            : 'bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-800'
+            ? 'bg-gradient-to-br from-yellow-500/20 to-orange-600/20 border-yellow-400/50 shadow-lg shadow-yellow-500/25' 
+            : 'bg-black/20 border-white/20 hover:border-white/40'
           }
         `}
         whileHover={{ 
-          scale: 1.15, 
-          rotate: isBaianoMode ? [0, -8, 8, 0] : [0, -3, 3, 0],
-          boxShadow: isBaianoMode 
-            ? "0 0 40px rgba(255, 193, 7, 0.9), 0 0 80px rgba(255, 152, 0, 0.7), 0 0 120px rgba(255, 69, 0, 0.5)"
-            : "0 0 40px rgba(99, 102, 241, 0.9), 0 0 80px rgba(139, 69, 19, 0.6)"
+          scale: 1.1,
+          transition: { type: "spring", stiffness: 400, damping: 10 }
         }}
-        whileTap={{ scale: 0.9 }}
+        whileTap={{ scale: 0.95 }}
         animate={isTransitioning ? { 
-          scale: [1, 1.3, 0.8, 1.2, 1],
-          rotate: [0, -15, 15, -8, 0],
-          boxShadow: [
-            "0 0 20px rgba(255, 255, 255, 0.5)",
-            "0 0 60px rgba(255, 215, 0, 0.8)",
-            "0 0 100px rgba(255, 69, 0, 0.9)",
-            "0 0 80px rgba(255, 20, 147, 0.7)",
-            "0 0 40px rgba(99, 102, 241, 0.8)"
-          ]
-        } : (!isBaianoMode ? {
-          scale: [1, 1.05, 1],
-          y: [0, -2, 0]
-        } : {})}
+          scale: [1, 1.2, 1],
+          rotate: [0, 360]
+        } : {}}
         transition={{ 
-          duration: isTransitioning ? 0.8 : 3,
-          repeat: (!isBaianoMode && !isTransitioning) ? Infinity : 0,
-          ease: "easeInOut"
+          duration: isTransitioning ? 0.8 : 0.3
         }}
       >
-        {/* Sparkles animados */}
+        {/* Pulse Ring quando ativo */}
         <AnimatePresence>
           {isBaianoMode && (
-            <>
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-2 h-2 bg-yellow-300 rounded-full"
-                  initial={{ scale: 0, x: 0, y: 0 }}
-                  animate={{
-                    scale: [0, 1, 0],
-                    x: [0, Math.random() * 60 - 30],
-                    y: [0, Math.random() * 60 - 30],
-                    rotate: [0, 360]
-                  }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                    ease: "easeOut"
-                  }}
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                  }}
-                />
-              ))}
-            </>
+            <motion.div
+              className="absolute inset-0 rounded-full border-2 border-yellow-400/60"
+              initial={{ scale: 1, opacity: 0.8 }}
+              animate={{ 
+                scale: [1, 1.8, 1],
+                opacity: [0.8, 0, 0.8]
+              }}
+              exit={{ scale: 1, opacity: 0 }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeOut"
+              }}
+            />
           )}
         </AnimatePresence>
 
-        {/* Border animado */}
-        <div className="absolute inset-0 rounded-xl overflow-hidden">
-          <div 
-            className={`absolute top-0 left-0 w-full h-1 animate-slide-right ${
-              isBaianoMode ? 'bg-gradient-to-r from-transparent via-yellow-300 to-transparent' 
-                          : 'bg-gradient-to-r from-transparent via-blue-300 to-transparent'
-            }`}
-          />
-          <div 
-            className={`absolute top-0 right-0 w-1 h-full animate-slide-down ${
-              isBaianoMode ? 'bg-gradient-to-b from-transparent via-orange-300 to-transparent' 
-                          : 'bg-gradient-to-b from-transparent via-purple-300 to-transparent'
-            }`}
-            style={{ animationDelay: '0.25s' }}
-          />
-          <div 
-            className={`absolute bottom-0 right-0 w-full h-1 animate-slide-left ${
-              isBaianoMode ? 'bg-gradient-to-l from-transparent via-red-300 to-transparent' 
-                          : 'bg-gradient-to-l from-transparent via-indigo-300 to-transparent'
-            }`}
-            style={{ animationDelay: '0.5s' }}
-          />
-          <div 
-            className={`absolute bottom-0 left-0 w-1 h-full animate-slide-up ${
-              isBaianoMode ? 'bg-gradient-to-t from-transparent via-yellow-300 to-transparent' 
-                          : 'bg-gradient-to-t from-transparent via-blue-300 to-transparent'
-            }`}
-            style={{ animationDelay: '0.75s' }}
-          />
-        </div>
-
-        {/* Conteúdo do botão */}
-        <div className="relative z-10 flex flex-col items-center gap-2">
+        {/* Icon */}
+        <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             animate={isBaianoMode ? { 
-              rotate: [0, 360],
-              scale: [1, 1.2, 1]
+              scale: [1, 1.1, 1]
             } : {}}
             transition={{ 
-              duration: isBaianoMode ? 2 : 0, 
+              duration: 0.6,
               repeat: isBaianoMode ? Infinity : 0,
-              ease: "linear"
+              ease: "easeInOut"
             }}
           >
             {isBaianoMode ? (
-              <Sun className="w-8 h-8 text-yellow-100" />
+              <Volume2 className="w-6 h-6 text-yellow-400 drop-shadow-lg" />
             ) : (
-              <Music className="w-8 h-8 text-blue-100" />
+              <VolumeX className="w-6 h-6 text-white/70 group-hover:text-white transition-colors" />
             )}
           </motion.div>
-          
-          <div className="text-center">
-            <span className="text-sm font-bold tracking-wide block">
-              {isBaianoMode ? 'FESTA!' : 'BAIANO'}
-            </span>
-            {!isBaianoMode && (
-              <span className="text-xs opacity-90 block mt-1">
-                MODO
-              </span>
-            )}
-          </div>
         </div>
 
-        {/* Efeito de shine */}
-        <div 
-          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background: isBaianoMode 
-              ? 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%)'
-              : 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%)',
-            animation: 'shine 2s ease-in-out infinite'
-          }}
-        />
+        {/* Glow effect quando ativo */}
+        <AnimatePresence>
+          {isBaianoMode && (
+            <motion.div
+              className="absolute inset-0 rounded-full bg-gradient-to-br from-yellow-400/30 to-orange-500/30 blur-md"
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: [0.5, 0.8, 0.5],
+                scale: [0.8, 1.1, 0.8]
+              }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          )}
+        </AnimatePresence>
       </motion.button>
-
-      <style jsx>{`
-        @keyframes slide-right {
-          0% { transform: translateX(-100%); }
-          50%, 100% { transform: translateX(100%); }
-        }
-        @keyframes slide-down {
-          0% { transform: translateY(-100%); }
-          50%, 100% { transform: translateY(100%); }
-        }
-        @keyframes slide-left {
-          0% { transform: translateX(100%); }
-          50%, 100% { transform: translateX(-100%); }
-        }
-        @keyframes slide-up {
-          0% { transform: translateY(100%); }
-          50%, 100% { transform: translateY(-100%); }
-        }
-        @keyframes shine {
-          0% { transform: translateX(-100%) rotate(45deg); }
-          100% { transform: translateX(100%) rotate(45deg); }
-        }
-        .animate-slide-right { animation: slide-right 2s linear infinite; }
-        .animate-slide-down { animation: slide-down 2s linear infinite; }
-        .animate-slide-left { animation: slide-left 2s linear infinite; }
-        .animate-slide-up { animation: slide-up 2s linear infinite; }
-      `}</style>
     </motion.div>
   );
 }
