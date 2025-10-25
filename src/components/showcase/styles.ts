@@ -181,7 +181,10 @@ export const showcaseStyles = `
   @media (max-width: 768px) {
     .content {
       flex-direction: column;
-      gap: 5vh;
+      gap: 3vh;
+      top: 60% !important;
+      transform: translateY(-50%) !important;
+      padding: 0 1rem !important;
     }
 
     .left-column,
@@ -191,15 +194,39 @@ export const showcaseStyles = `
       text-align: center;
     }
 
-    .featured {
-      font-size: 3vw;
-      order: -1;
-      margin-bottom: 2vh;
+    .left-column,
+    .right-column {
+      gap: 1rem !important;
     }
 
-    .header,
+    .artist,
+    .category {
+      font-size: 1.4rem !important;
+      padding: 0.5rem 0 !important;
+      line-height: 1.2 !important;
+    }
+
+    .featured {
+      font-size: 4vw !important;
+      order: -1;
+      margin-bottom: 1vh;
+      height: 6vh !important;
+    }
+
+    .featured-content h3 {
+      font-size: 1.1rem !important;
+      white-space: normal !important;
+      line-height: 1.3 !important;
+    }
+
+    .header {
+      font-size: 12vw !important;
+      padding-top: 3vh !important;
+    }
+
     .footer {
-      font-size: 15vw;
+      font-size: 12vw !important;
+      padding-bottom: 3vh !important;
     }
 
     .progress-indicator {
