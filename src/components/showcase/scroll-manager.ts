@@ -12,23 +12,48 @@ let lastProgress = 0;
 let scrollDirection = 0;
 let sectionPositions: number[] = [];
 
-export const setupSectionPositions = (state: ShowcaseState) => {
+const adjustFixedSectionHeight = () => {
   const fixedSectionElement = document.querySelector('.fixed-section') as HTMLElement;
   if (!fixedSectionElement) return;
   
   // Detectar se é mobile para ajustar altura da seção
   const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
   
+  // FORÇAR a altura correta removendo qualquer estilo anterior
+  fixedSectionElement.style.removeProperty('height');
+  fixedSectionElement.style.removeProperty('min-height');
+  fixedSectionElement.style.removeProperty('max-height');
+  
   if (isMobile) {
     // 📱 Mobile: altura normal sem espaço extra para scroll livre
-    fixedSectionElement.style.height = '100vh';
-    console.log('📱 Mobile: Fixed section ajustada para 100vh (sem espaço extra)');
+    fixedSectionElement.style.setProperty('height', '100vh', 'important');
+    fixedSectionElement.style.minHeight = '100vh';
+    fixedSectionElement.style.maxHeight = '100vh';
+    console.log('📱 Mobile: Fixed section FORÇADA para 100vh (sem espaço extra)');
   } else {
     // 🖥️ Desktop: altura expandida para criar espaço de scroll do carrossel
     const totalHeight = (bloggersData.length + 2) * 100;
-    fixedSectionElement.style.height = `${totalHeight}vh`;
-    console.log(`🖥️ Desktop: Fixed section ajustada para ${totalHeight}vh (com espaço de scroll)`);
+    fixedSectionElement.style.setProperty('height', `${totalHeight}vh`, 'important');
+    fixedSectionElement.style.minHeight = `${totalHeight}vh`;
+    console.log(`🖥️ Desktop: Fixed section FORÇADA para ${totalHeight}vh (com espaço de scroll)`);
   }
+};
+
+export const setupSectionPositions = (state: ShowcaseState) => {
+  const fixedSectionElement = document.querySelector('.fixed-section') as HTMLElement;
+  if (!fixedSectionElement) return;
+  
+  // Ajustar altura dinamicamente
+  adjustFixedSectionHeight();
+  
+  // Listener para mudanças de viewport (desktop ↔ mobile)
+  const resizeHandler = () => adjustFixedSectionHeight();
+  window.addEventListener('resize', resizeHandler);
+  
+  // Cleanup do listener (será removido quando o componente for desmontado)
+  setTimeout(() => {
+    window.removeEventListener('resize', resizeHandler);
+  }, 300000); // Remove após 5 minutos para evitar memory leak
   
   const fixedSectionTop = fixedSectionElement.offsetTop;
   const fixedSectionHeight = fixedSectionElement.offsetHeight;
