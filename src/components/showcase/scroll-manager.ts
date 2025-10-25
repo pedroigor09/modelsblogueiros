@@ -104,13 +104,17 @@ export const setupScrollTriggers = (
       const progress = self.progress;
       const progressDelta = progress - lastProgress;
       
+      // Detectar se é mobile para ajustar sensibilidade
+      const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+      const threshold = isMobile ? 0.0005 : 0.001; // Mais sensível no mobile
+      
       // Detectar direção do scroll
-      if (Math.abs(progressDelta) > 0.001) {
+      if (Math.abs(progressDelta) > threshold) {
         scrollDirection = progressDelta > 0 ? 1 : -1;
       }
       
       // Calcular seção alvo - EXATAMENTE como no template
-      const maxSection = bloggersData.length - 1; // 12 para Matheus Santos
+      const maxSection = bloggersData.length - 1; // 13 para Wallace
       const targetSection = Math.min(maxSection, Math.floor(progress * bloggersData.length));
       
       // Verificar se cruzamos uma fronteira de seção
@@ -257,8 +261,12 @@ export const snapToSection = (
   // Fazer snap para posição - EXATAMENTE como no template
   const targetPosition = sectionPositions[targetSection];
   
+  // Detectar se é mobile para ajustar velocidade
+  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+  const snapDuration = isMobile ? 0.4 : 0.6; // Mais rápido no mobile
+  
   (state.lenis.current as any)?.scrollTo(targetPosition, {
-    duration: 0.6,
+    duration: snapDuration,
     easing: (t: number) => 1 - Math.pow(1 - t, 3),
     lock: true,
     onComplete: () => {
