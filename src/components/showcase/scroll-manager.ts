@@ -106,7 +106,7 @@ export const setupScrollTriggers = (
       
       // Detectar se é mobile para ajustar sensibilidade
       const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
-      const threshold = isMobile ? 0.0005 : 0.001; // Mais sensível no mobile
+      const threshold = isMobile ? 0.0001 : 0.001; // Muito mais sensível no mobile
       
       // Detectar direção do scroll
       if (Math.abs(progressDelta) > threshold) {
@@ -263,7 +263,7 @@ export const snapToSection = (
   
   // Detectar se é mobile para ajustar velocidade
   const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
-  const snapDuration = isMobile ? 0.4 : 0.6; // Mais rápido no mobile
+  const snapDuration = isMobile ? 0.25 : 0.6; // Muito mais rápido no mobile
   
   (state.lenis.current as any)?.scrollTo(targetPosition, {
     duration: snapDuration,
