@@ -80,7 +80,8 @@ export const setupScrollTriggers = (
   refs: ShowcaseRefs,
   state: ShowcaseState,
   updateDebugInfo: (info: string) => void,
-  snapToSection: (targetSection: number) => void
+  snapToSection: (targetSection: number) => void,
+  changeSection: (newSection: number) => void
 ) => {
   if (!refs.fixedContainerRef.current) {
     console.error('❌ fixedContainerRef.current não encontrado!');
@@ -91,7 +92,12 @@ export const setupScrollTriggers = (
     height: "100vh"
   });
 
-  // ScrollTrigger principal - EXATAMENTE como no template original
+  // Detectar se é mobile ou desktop
+  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+  
+  console.log(`📱 Dispositivo detectado: ${isMobile ? 'Mobile (scroll livre)' : 'Desktop (carrossel controlado)'}`);
+
+  // ScrollTrigger principal com lógica diferenciada
   const mainScrollTrigger = ScrollTrigger.create({
     trigger: ".fixed-section",
     start: "top top",
@@ -99,8 +105,6 @@ export const setupScrollTriggers = (
     pin: ".fixed-container",
     pinSpacing: true,
     onUpdate: (self) => {
-      if (isSnapping) return; // Parar durante snap, como no template
-      
       const progress = self.progress;
       const progressDelta = progress - lastProgress;
       
@@ -113,9 +117,26 @@ export const setupScrollTriggers = (
       const maxSection = bloggersData.length - 1;
       const targetSection = Math.min(maxSection, Math.floor(progress * bloggersData.length));
       
-      // Verificar se cruzamos uma fronteira de seção
-      if (targetSection !== currentSection && !isAnimating) {
-        snapToSection(targetSection);
+      // LÓGICA DIFERENCIADA: Desktop vs Mobile
+      if (isMobile) {
+        // 📱 MOBILE: Scroll livre - apenas atualiza a seção atual sem fazer snap
+        if (targetSection !== currentSection) {
+          currentSection = targetSection;
+          
+          // Só faz a transição visual sem snap forçado
+          if (!isAnimating) {
+            // Iniciar transição visual suave
+            changeSection(currentSection);
+          }
+        }
+      } else {
+        // 🖥️ DESKTOP: Carrossel controlado - snap obrigatório
+        if (isSnapping) return; // Parar durante snap
+        
+        // Verificar se cruzamos uma fronteira de seção
+        if (targetSection !== currentSection && !isAnimating) {
+          snapToSection(targetSection);
+        }
       }
       
       lastProgress = progress;
@@ -126,7 +147,7 @@ export const setupScrollTriggers = (
         refs.progressFillRef.current.style.width = `${sectionProgress * 100}%`;
       }
       
-      updateDebugInfo(`Section: ${currentSection}, Target: ${targetSection}, Progress: ${progress.toFixed(3)}, Direction: ${scrollDirection}`);
+      updateDebugInfo(`${isMobile ? '📱' : '🖥️'} Section: ${currentSection}, Target: ${targetSection}, Progress: ${progress.toFixed(3)}, Mode: ${isMobile ? 'Free' : 'Controlled'}`);
     }
   });
 

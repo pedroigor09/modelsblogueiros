@@ -89,6 +89,16 @@ export const useShowcase = () => {
               (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
               animateNavigation
             )
+          ),
+          (newSection: number) => changeSection(
+            newSection,
+            refs,
+            state,
+            () => updateProgressNumbers(state, refs),
+            (info: string) => updateDebugInfo(info, refs),
+            (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
+            (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
+            animateNavigation
           )
         );
         
