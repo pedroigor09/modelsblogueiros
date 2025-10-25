@@ -104,25 +104,18 @@ export const setupScrollTriggers = (
       const progress = self.progress;
       const progressDelta = progress - lastProgress;
       
-      // Detectar se é mobile para ajustar sensibilidade
-      const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
-      const threshold = isMobile ? 0.0001 : 0.001; // Muito mais sensível no mobile
-      
       // Detectar direção do scroll
-      if (Math.abs(progressDelta) > threshold) {
+      if (Math.abs(progressDelta) > 0.001) {
         scrollDirection = progressDelta > 0 ? 1 : -1;
       }
       
-      // Calcular seção alvo - EXATAMENTE como no template
-      const maxSection = bloggersData.length - 1; // 13 para Wallace
+      // Calcular seção alvo baseado no progress
+      const maxSection = bloggersData.length - 1;
       const targetSection = Math.min(maxSection, Math.floor(progress * bloggersData.length));
       
       // Verificar se cruzamos uma fronteira de seção
       if (targetSection !== currentSection && !isAnimating) {
-        // Determinar próxima seção (só permitir mover uma seção por vez)
-        const nextSection = currentSection + (targetSection > currentSection ? 1 : -1);
-        // Fazer snap para esta seção
-        snapToSection(nextSection);
+        snapToSection(targetSection);
       }
       
       lastProgress = progress;
@@ -258,15 +251,11 @@ export const snapToSection = (
   // Atualizar seção atual
   currentSection = targetSection;
   
-  // Fazer snap para posição - EXATAMENTE como no template
+  // Fazer snap para posição
   const targetPosition = sectionPositions[targetSection];
   
-  // Detectar se é mobile para ajustar velocidade
-  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
-  const snapDuration = isMobile ? 0.25 : 0.6; // Muito mais rápido no mobile
-  
   (state.lenis.current as any)?.scrollTo(targetPosition, {
-    duration: snapDuration,
+    duration: 0.6,
     easing: (t: number) => 1 - Math.pow(1 - t, 3),
     lock: true,
     onComplete: () => {
