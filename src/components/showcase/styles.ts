@@ -180,59 +180,61 @@ export const showcaseStyles = `
 
   @media (max-width: 768px) {
     .content {
-      flex-direction: column;
-      gap: 2vh;
-      top: 70% !important;
+      flex-direction: row !important;
+      gap: 1rem !important;
+      top: 50% !important;
       transform: translateY(-50%) !important;
       padding: 0 1rem !important;
+      justify-content: space-between !important;
+      align-items: center !important;
     }
 
-    .left-column,
-    .right-column,
-    .featured {
-      width: 100%;
-      text-align: center;
+    .left-column {
+      width: 40% !important;
+      text-align: left !important;
+      gap: 0.4rem !important;
     }
 
-    .left-column,
     .right-column {
-      gap: 0.8rem !important;
+      width: 40% !important;
+      text-align: right !important;
+      gap: 0.4rem !important;
+    }
+
+    .featured {
+      width: 20% !important;
+      text-align: center !important;
+      font-size: 2.5vw !important;
+      height: 8vh !important;
     }
 
     .artist,
     .category {
-      font-size: 1.3rem !important;
-      padding: 0.3rem 0 !important;
+      font-size: 0.9rem !important;
+      padding: 0.2rem 0 !important;
       line-height: 1.1 !important;
     }
 
-    .featured {
-      font-size: 3.5vw !important;
-      order: -1;
-      margin-bottom: 1vh;
-      height: 5vh !important;
-    }
-
     .featured-content h3 {
-      font-size: 1rem !important;
-      white-space: normal !important;
+      font-size: 0.8rem !important;
+      white-space: nowrap !important;
       line-height: 1.2 !important;
     }
 
     .header {
-      font-size: 10vw !important;
+      font-size: 8vw !important;
       padding-top: 2vh !important;
-      line-height: 0.9 !important;
+      line-height: 0.85 !important;
     }
 
     .footer {
-      font-size: 10vw !important;
+      font-size: 8vw !important;
       padding-bottom: 2vh !important;
-      line-height: 0.9 !important;
+      line-height: 0.85 !important;
     }
 
     .progress-indicator {
-      width: 120px;
+      width: 100px;
     }
   }
 `;

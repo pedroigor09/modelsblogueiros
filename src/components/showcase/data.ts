@@ -61,34 +61,41 @@ export const bloggersData: Blogger[] = [
   },
   {
     id: 8,
+    name: "Wallace",
+    category: "Urban Energy",
+    featured: "Vibrant Looks",
+    image: getAssetPath("/wall.jpg")
+  },
+  {
+    id: 9,
     name: "Ygor",
     category: "Bold Fashion",
     featured: "Creative Expression",
     image: getAssetPath("/ygor.jpg")
   },
   {
-    id: 9,
+    id: 10,
     name: "Rone",
     category: "Unique Style",
     featured: "Distinctive Look",
     image: getAssetPath("/rone.jpg")
   },
   {
-    id: 10,
+    id: 11,
     name: "Jeferson",
     category: "Creative Vision",
     featured: "Unlimited Style",
     image: getAssetPath("/jef.jpg")
   },
   {
-    id: 11,
+    id: 12,
     name: "Jonathan Silva",
     category: "Street Style",
     featured: "Urban Authenticity",
     image: getAssetPath("/jn.jpg")
   },
   {
-    id: 12,
+    id: 13,
     name: "Matheus Santos",
     category: "Sophisticated",
     featured: "Modern Elegance",
