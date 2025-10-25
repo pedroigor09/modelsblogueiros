@@ -97,7 +97,40 @@ export const setupScrollTriggers = (
   
   console.log(`📱 Dispositivo detectado: ${isMobile ? 'Mobile (scroll livre)' : 'Desktop (carrossel controlado)'}`);
 
-  // ScrollTrigger principal com lógica diferenciada
+  if (isMobile) {
+    // 📱 MOBILE: Scroll completamente livre - sem ScrollTrigger, sem pin, sem controle
+    console.log('📱 Mobile detectado - scroll livre ativado');
+    
+    // Apenas um ScrollTrigger simples para detectar seção baseada no scroll normal
+    ScrollTrigger.create({
+      trigger: ".fixed-section",
+      start: "top center",
+      end: "bottom center",
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const maxSection = bloggersData.length - 1;
+        const targetSection = Math.min(maxSection, Math.floor(progress * bloggersData.length));
+        
+        // Apenas mudar seção visual, sem snap
+        if (targetSection !== currentSection && !isAnimating) {
+          currentSection = targetSection;
+          changeSection(currentSection);
+        }
+        
+        // Atualizar barra de progresso
+        const sectionProgress = currentSection / maxSection;
+        if (refs.progressFillRef.current) {
+          refs.progressFillRef.current.style.width = `${sectionProgress * 100}%`;
+        }
+        
+        updateDebugInfo(`📱 Mobile Free Scroll - Section: ${currentSection}, Progress: ${progress.toFixed(3)}`);
+      }
+    });
+    
+    return; // Sair aqui para mobile - não criar mais ScrollTriggers
+  }
+
+  // �️ DESKTOP: ScrollTrigger completo com pin e controle
   const mainScrollTrigger = ScrollTrigger.create({
     trigger: ".fixed-section",
     start: "top top",
@@ -105,6 +138,8 @@ export const setupScrollTriggers = (
     pin: ".fixed-container",
     pinSpacing: true,
     onUpdate: (self) => {
+      if (isSnapping) return; // Parar durante snap
+      
       const progress = self.progress;
       const progressDelta = progress - lastProgress;
       
@@ -117,26 +152,9 @@ export const setupScrollTriggers = (
       const maxSection = bloggersData.length - 1;
       const targetSection = Math.min(maxSection, Math.floor(progress * bloggersData.length));
       
-      // LÓGICA DIFERENCIADA: Desktop vs Mobile
-      if (isMobile) {
-        // 📱 MOBILE: Scroll livre - apenas atualiza a seção atual sem fazer snap
-        if (targetSection !== currentSection) {
-          currentSection = targetSection;
-          
-          // Só faz a transição visual sem snap forçado
-          if (!isAnimating) {
-            // Iniciar transição visual suave
-            changeSection(currentSection);
-          }
-        }
-      } else {
-        // 🖥️ DESKTOP: Carrossel controlado - snap obrigatório
-        if (isSnapping) return; // Parar durante snap
-        
-        // Verificar se cruzamos uma fronteira de seção
-        if (targetSection !== currentSection && !isAnimating) {
-          snapToSection(targetSection);
-        }
+      // Verificar se cruzamos uma fronteira de seção
+      if (targetSection !== currentSection && !isAnimating) {
+        snapToSection(targetSection);
       }
       
       lastProgress = progress;
@@ -147,18 +165,20 @@ export const setupScrollTriggers = (
         refs.progressFillRef.current.style.width = `${sectionProgress * 100}%`;
       }
       
-      updateDebugInfo(`${isMobile ? '📱' : '🖥️'} Section: ${currentSection}, Target: ${targetSection}, Progress: ${progress.toFixed(3)}, Mode: ${isMobile ? 'Free' : 'Controlled'}`);
+      updateDebugInfo(`🖥️ Desktop Controlled - Section: ${currentSection}, Target: ${targetSection}, Progress: ${progress.toFixed(3)}`);
     }
   });
 
-  // End section handler - mais simples
-  ScrollTrigger.create({
-    trigger: ".end-section",
-    start: "top center",
-    end: "bottom bottom",
-    onUpdate: (self) => {
-      // Só ativar efeitos se estivermos realmente na última seção
-      const isOnLastSection = currentSection === (bloggersData.length - 1);
+  // End section handler - só para desktop
+  if (!isMobile) {
+    ScrollTrigger.create({
+      trigger: ".end-section",
+      start: "top center",
+      end: "bottom bottom",
+      onUpdate: (self) => {
+        // 🖥️ Desktop: lógica completa de unpin
+        // Só ativar efeitos se estivermos realmente na última seção
+        const isOnLastSection = currentSection === (bloggersData.length - 1);
       
       if (self.progress > 0.1 && isOnLastSection) {
         refs.footerRef.current?.classList.add("blur");
@@ -244,9 +264,10 @@ export const setupScrollTriggers = (
         }
       }
       
-      updateDebugInfo(`End Section - Height: ${refs.fixedContainerRef.current?.style.height}, Progress: ${self.progress.toFixed(2)}, Last Section: ${isOnLastSection}`);
-    }
-  });
+        updateDebugInfo(`End Section - Height: ${refs.fixedContainerRef.current?.style.height}, Progress: ${self.progress.toFixed(2)}, Last Section: ${isOnLastSection}`);
+      }
+    });
+  }
 };
 
 export const snapToSection = (
