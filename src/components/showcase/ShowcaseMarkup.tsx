@@ -141,7 +141,8 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   transform: 'translateY(-50%)',
                   padding: '0 2rem',
                   willChange: 'transform',
-                  zIndex: 150
+                  zIndex: 150,
+                  pointerEvents: 'none'
                 }}
               >
                 {/* Left Column */}
@@ -153,7 +154,8 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   textAlign: 'left',
                   willChange: 'filter, opacity',
                   transition: 'filter 0.5s ease, opacity 0.5s ease',
-                  zIndex: 200
+                  zIndex: 600,
+                  pointerEvents: 'auto'
                 }}>
                   {bloggersData.map((blogger, index) => (
                     <div
@@ -168,8 +170,9 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                         cursor: 'pointer',
                         position: 'relative',
                         paddingLeft: index === 0 ? '15px' : '0',
-                        zIndex: 250,
+                        zIndex: 300,
                         fontSize: '1.2rem',
+                        pointerEvents: 'auto',
                         fontWeight: '500',
                         fontFamily: 'var(--font-primary, "PP Neue Montreal", sans-serif)'
                       }}
@@ -203,7 +206,9 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   height: '10vh',
                   overflow: 'hidden',
                   willChange: 'filter, opacity',
-                  transition: 'filter 0.5s ease, opacity 0.5s ease'
+                  transition: 'filter 0.5s ease, opacity 0.5s ease',
+                  pointerEvents: 'none',
+                  zIndex: 100
                 }}>
                   {bloggersData.map((blogger, index) => (
                     <div
@@ -248,7 +253,8 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   textAlign: 'right',
                   willChange: 'filter, opacity',
                   transition: 'filter 0.5s ease, opacity 0.5s ease',
-                  zIndex: 200
+                  zIndex: 600,
+                  pointerEvents: 'auto'
                 }}>
                   {bloggersData.map((blogger, index) => (
                     <div
@@ -263,8 +269,9 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                         cursor: 'pointer',
                         position: 'relative',
                         paddingRight: index === 0 ? '15px' : '0',
-                        zIndex: 250,
+                        zIndex: 300,
                         fontSize: '1.2rem',
+                        pointerEvents: 'auto',
                         fontWeight: '500',
                         fontFamily: 'var(--font-primary, "PP Neue Montreal", sans-serif)'
                       }}

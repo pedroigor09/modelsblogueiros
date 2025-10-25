@@ -41,22 +41,47 @@ export const setupNavigation = (
   state: ShowcaseState,
   snapToSection: (targetSection: number) => void
 ) => {
-  const artists = document.querySelectorAll('.artist');
-  const categories = document.querySelectorAll('.category');
-  
-  artists.forEach((artist, index) => {
-    artist.addEventListener('click', () => {
-      if (index !== state.currentSection.current) {
-        snapToSection(index);
-      }
+  // Aguardar que os elementos estejam no DOM
+  setTimeout(() => {
+    const artists = document.querySelectorAll('.artist');
+    const categories = document.querySelectorAll('.category');
+    
+    console.log(`🎯 Setup Navigation - Artists found: ${artists.length}, Categories found: ${categories.length}`);
+    
+    artists.forEach((artist, index) => {
+      // Remover listeners existentes primeiro
+      const newArtist = artist.cloneNode(true);
+      artist.parentNode?.replaceChild(newArtist, artist);
+      
+      newArtist.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(`🎵 Artist clicked: ${index} (${newArtist.textContent})`);
+        if (index !== state.currentSection.current && !state.isAnimating.current) {
+          snapToSection(index);
+        }
+      });
+      
+      // Adicionar cursor pointer
+      (newArtist as HTMLElement).style.cursor = 'pointer';
     });
-  });
-  
-  categories.forEach((category, index) => {
-    category.addEventListener('click', () => {
-      if (index !== state.currentSection.current) {
-        snapToSection(index);
-      }
+    
+    categories.forEach((category, index) => {
+      // Remover listeners existentes primeiro
+      const newCategory = category.cloneNode(true);
+      category.parentNode?.replaceChild(newCategory, category);
+      
+      newCategory.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(`🎨 Category clicked: ${index} (${newCategory.textContent})`);
+        if (index !== state.currentSection.current && !state.isAnimating.current) {
+          snapToSection(index);
+        }
+      });
+      
+      // Adicionar cursor pointer
+      (newCategory as HTMLElement).style.cursor = 'pointer';
     });
-  });
+    
+    console.log(`✅ Navigation setup completed for ${bloggersData.length} sections`);
+  }, 1000); // Aguardar 1 segundo para garantir que o DOM esteja pronto
 };

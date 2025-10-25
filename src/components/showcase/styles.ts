@@ -62,13 +62,15 @@ export const showcaseStyles = `
     transform: translateY(20px);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     color: #ffffff !important;
-    cursor: pointer;
+    cursor: pointer !important;
     position: relative;
     font-size: 1.2rem !important;
     font-weight: 500 !important;
     font-family: var(--font-primary, "PP Neue Montreal", Arial, sans-serif) !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important;
-    z-index: 250 !important;
+    z-index: 300 !important;
+    pointer-events: auto !important;
+    user-select: none !important;
   }
 
   .artist {
@@ -193,12 +195,16 @@ export const showcaseStyles = `
       width: 40% !important;
       text-align: left !important;
       gap: 0.4rem !important;
+      z-index: 300 !important;
+      pointer-events: auto !important;
     }
 
     .right-column {
       width: 40% !important;
       text-align: right !important;
       gap: 0.4rem !important;
+      z-index: 300 !important;
+      pointer-events: auto !important;
     }
 
     .featured {
@@ -206,6 +212,8 @@ export const showcaseStyles = `
       text-align: center !important;
       font-size: 2.5vw !important;
       height: 8vh !important;
+      pointer-events: none !important;
+      z-index: 100 !important;
     }
 
     .artist,
@@ -234,7 +242,39 @@ export const showcaseStyles = `
     }
 
     .progress-indicator {
-      width: 100px;
+      width: 120px;
+    }
+  }
+
+  /* Garantir que elementos sejam clicáveis em desktop */
+  @media (min-width: 769px) {
+    .left-column,
+    .right-column {
+      pointer-events: auto !important;
+      z-index: 400 !important;
+    }
+
+    .artist,
+    .category {
+      pointer-events: auto !important;
+      z-index: 500 !important;
+      cursor: pointer !important;
+      display: block !important;
+      position: relative !important;
+    }
+
+    .featured {
+      pointer-events: none !important;
+      z-index: 200 !important;
+    }
+
+    .featured-content {
+      pointer-events: none !important;
+    }
+
+    .background-container {
+      pointer-events: none !important;
+      z-index: 1 !important;
     }
   }
 `;
