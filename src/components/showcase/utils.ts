@@ -70,9 +70,18 @@ export const setupNavigation = (
         // Cursor pointer apenas no desktop
         (newArtist as HTMLElement).style.cursor = 'pointer';
       } else {
-        // 📱 Mobile: cursor padrão, sem cliques
+        // 📱 Mobile: PREVENIR cliques completamente
         (newArtist as HTMLElement).style.cursor = 'default';
-        console.log(`📱 Mobile: Navigation disabled for ${newArtist.textContent}`);
+        (newArtist as HTMLElement).style.pointerEvents = 'none';
+        
+        // Bloquear eventos de touch também
+        newArtist.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }, { passive: false });
+        
+        console.log(`📱 Mobile: Navigation BLOCKED for ${newArtist.textContent}`);
       }
     });
     
@@ -94,9 +103,18 @@ export const setupNavigation = (
         // Cursor pointer apenas no desktop
         (newCategory as HTMLElement).style.cursor = 'pointer';
       } else {
-        // 📱 Mobile: cursor padrão, sem cliques
+        // 📱 Mobile: PREVENIR cliques completamente
         (newCategory as HTMLElement).style.cursor = 'default';
-        console.log(`📱 Mobile: Navigation disabled for ${newCategory.textContent}`);
+        (newCategory as HTMLElement).style.pointerEvents = 'none';
+        
+        // Bloquear eventos de touch também
+        newCategory.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }, { passive: false });
+        
+        console.log(`📱 Mobile: Navigation BLOCKED for ${newCategory.textContent}`);
       }
     });
     
