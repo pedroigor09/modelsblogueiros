@@ -10,32 +10,6 @@ interface ShowcaseMarkupProps {
 export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
   return (
     <div className="creative-showcase">
-      {/* Loading Overlay */}
-      <div
-        ref={refs.loadingOverlayRef}
-        className="loading-overlay"
-        id="loading-overlay"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: '#fff',
-          zIndex: 10000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#000',
-          fontSize: '1.5rem',
-          fontFamily: 'var(--font-primary)',
-          textTransform: 'uppercase',
-          letterSpacing: '-0.02em'
-        }}
-      >
-        Loading <span className="loading-counter" ref={refs.loadingCounterRef}>[00]</span>
-      </div>
-
       {/* Debug Info */}
       <div ref={refs.debugInfoRef} className="debug-info"></div>
 
@@ -133,16 +107,17 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   gridColumn: '1 / 13',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
                   width: '100%',
                   position: 'absolute',
-                  top: '50%',
+                  top: '20%',
                   left: 0,
-                  transform: 'translateY(-50%)',
+                  transform: 'translateY(0)',
                   padding: '0 2rem',
                   willChange: 'transform',
                   zIndex: 150,
-                  pointerEvents: 'none'
+                  pointerEvents: 'none',
+                  height: '60%'
                 }}
               >
                 {/* Left Column */}
@@ -150,12 +125,15 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   width: '40%',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '0.25rem',
+                  gap: '0.15rem',
                   textAlign: 'left',
                   willChange: 'filter, opacity',
                   transition: 'filter 0.5s ease, opacity 0.5s ease',
                   zIndex: 600,
-                  pointerEvents: 'auto'
+                  pointerEvents: 'auto',
+                  height: '100%',
+                  justifyContent: 'flex-start',
+                  paddingTop: '2rem'
                 }}>
                   {bloggersData.map((blogger, index) => (
                     <div
@@ -171,7 +149,7 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                         position: 'relative',
                         paddingLeft: index === 0 ? '15px' : '0',
                         zIndex: 300,
-                        fontSize: '1.2rem',
+                        fontSize: '0.9rem',
                         pointerEvents: 'auto',
                         fontWeight: '500',
                         fontFamily: 'var(--font-primary, "PP Neue Montreal", sans-serif)'
@@ -203,7 +181,7 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   textAlign: 'center',
                   fontSize: '1.5vw',
                   position: 'relative',
-                  height: '10vh',
+                  height: '100%',
                   overflow: 'hidden',
                   willChange: 'filter, opacity',
                   transition: 'filter 0.5s ease, opacity 0.5s ease',
@@ -249,12 +227,15 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                   width: '40%',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '0.25rem',
+                  gap: '0.15rem',
                   textAlign: 'right',
                   willChange: 'filter, opacity',
                   transition: 'filter 0.5s ease, opacity 0.5s ease',
                   zIndex: 600,
-                  pointerEvents: 'auto'
+                  pointerEvents: 'auto',
+                  height: '100%',
+                  justifyContent: 'flex-start',
+                  paddingTop: '2rem'
                 }}>
                   {bloggersData.map((blogger, index) => (
                     <div
@@ -270,7 +251,7 @@ export const ShowcaseMarkup: React.FC<ShowcaseMarkupProps> = ({ refs }) => {
                         position: 'relative',
                         paddingRight: index === 0 ? '15px' : '0',
                         zIndex: 300,
-                        fontSize: '1.2rem',
+                        fontSize: '0.9rem',
                         pointerEvents: 'auto',
                         fontWeight: '500',
                         fontFamily: 'var(--font-primary, "PP Neue Montreal", sans-serif)'

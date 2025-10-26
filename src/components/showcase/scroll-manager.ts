@@ -29,13 +29,11 @@ const adjustFixedSectionHeight = () => {
     fixedSectionElement.style.setProperty('height', '100vh', 'important');
     fixedSectionElement.style.minHeight = '100vh';
     fixedSectionElement.style.maxHeight = '100vh';
-    console.log('📱 Mobile: Fixed section FORÇADA para 100vh (sem espaço extra)');
   } else {
     // 🖥️ Desktop: altura expandida para criar espaço de scroll do carrossel
     const totalHeight = (bloggersData.length + 2) * 100;
     fixedSectionElement.style.setProperty('height', `${totalHeight}vh`, 'important');
     fixedSectionElement.style.minHeight = `${totalHeight}vh`;
-    console.log(`🖥️ Desktop: Fixed section FORÇADA para ${totalHeight}vh (com espaço de scroll)`);
   }
 };
 
@@ -71,8 +69,6 @@ export const setupSectionPositions = (state: ShowcaseState) => {
     sectionPositions.push(fixedSectionTop + (fixedSectionHeight * i) / totalSections);
   }
   
-  console.log(`🎯 Sistema reinicializado - ${totalSections} seções`);
-  console.log(`📋 Seções: ${bloggersData.map((b, i) => `${i}:${b.name}`).join(' → ')}`);
 };
 
 export const setupSplitTexts = (state: ShowcaseState) => {
@@ -131,46 +127,31 @@ export const setupScrollTriggers = (
     height: "100vh"
   });
 
-  // Detectar se é mobile ou desktop
   const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
   
-  console.log(`📱 Dispositivo detectado: ${isMobile ? 'Mobile (scroll livre)' : 'Desktop (carrossel controlado)'}`);
 
   if (isMobile) {
-    // 📱 MOBILE: Scroll completamente livre - sem ScrollTrigger, sem pin, sem controle
-    console.log('📱 Mobile detectado - scroll livre ativado');
     
-    // 🔥 FORÇAR seção inicial como 0 (Africanique) no mobile
     currentSection = 0;
-    console.log('📱 MOBILE FIX: currentSection forçado para 0 (Africanique)');
+    changeSection(0); 
     
-    // Apenas um ScrollTrigger simples para detectar seção baseada no scroll normal
+    if (refs.progressFillRef.current) {
+      refs.progressFillRef.current.style.width = '0%';
+    }
+    
     ScrollTrigger.create({
-      trigger: ".fixed-section",
-      start: "top center",
-      end: "bottom center",
-      onUpdate: (self) => {
-        const progress = self.progress;
-        const maxSection = bloggersData.length - 1;
-        const targetSection = Math.min(maxSection, Math.floor(progress * bloggersData.length));
-        
-        // Apenas mudar seção visual, sem snap
-        if (targetSection !== currentSection && !isAnimating) {
-          currentSection = targetSection;
-          changeSection(currentSection);
-        }
-        
-        // Atualizar barra de progresso
-        const sectionProgress = currentSection / maxSection;
-        if (refs.progressFillRef.current) {
-          refs.progressFillRef.current.style.width = `${sectionProgress * 100}%`;
-        }
-        
-        updateDebugInfo(`📱 Mobile Free Scroll - Section: ${currentSection}, Progress: ${progress.toFixed(3)}`);
+      trigger: ".end-section",
+      start: "top 80%",
+      end: "bottom bottom",
+      onEnter: () => {
+      },
+      onLeave: () => {
       }
     });
     
-    return; // Sair aqui para mobile - não criar mais ScrollTriggers
+    updateDebugInfo('📱 MOBILE: Scroll livre ativo - CinematicTransition habilitado');
+    
+    return; // Sair sem criar o ScrollTrigger do carrossel
   }
 
   // �️ DESKTOP: ScrollTrigger completo com pin e controle

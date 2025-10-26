@@ -3,7 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CustomEase } from 'gsap/CustomEase';
 import { SplitText } from 'gsap/SplitText';
 
-// Registrar plugins GSAP
 export const initGSAP = () => {
   if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger, CustomEase, SplitText);
@@ -11,7 +10,6 @@ export const initGSAP = () => {
   }
 };
 
-// Cleanup GSAP
 export const cleanupGSAP = () => {
   ScrollTrigger.getAll().forEach(trigger => trigger.kill());
   gsap.killTweensOf("*");

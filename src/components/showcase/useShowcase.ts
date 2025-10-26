@@ -2,14 +2,13 @@ import { useEffect, useRef } from 'react';
 import { ShowcaseRefs, ShowcaseState } from './types';
 import { initGSAP, initLenis, cleanupGSAP } from './gsap-config';
 import { resetComponentState } from './state-manager';
-import { animateLoadingCounter, animateColumnsEntry } from './loading-animations';
+import { animateColumnsEntry } from './loading-animations';
 import { setupSectionPositions, setupSplitTexts, setupScrollTriggers, snapToSection } from './scroll-manager';
 import { changeSection, animateFeaturedTexts, animateBackgrounds, animateNavigation } from './section-animations';
 import { updateProgressNumbers, updateDebugInfo, setupDebug, setupNavigation } from './utils';
 
 export const useShowcase = () => {
-  const loadingOverlayRef = useRef<HTMLDivElement>(null);
-  const loadingCounterRef = useRef<HTMLSpanElement>(null);
+  const isInitialized = useRef(false);
   const fixedContainerRef = useRef<HTMLDivElement>(null);
   const debugInfoRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -31,8 +30,8 @@ export const useShowcase = () => {
   const lenis = useRef<unknown>(null);
 
   const refs: ShowcaseRefs = {
-    loadingOverlayRef,
-    loadingCounterRef,
+    loadingOverlayRef: useRef<HTMLDivElement>(null),
+    loadingCounterRef: useRef<HTMLSpanElement>(null),
     fixedContainerRef,
     debugInfoRef,
     headerRef,
@@ -57,77 +56,124 @@ export const useShowcase = () => {
   };
 
   const initPage = async () => {
-    if (refs.loadingOverlayRef.current) {
-      refs.loadingOverlayRef.current.style.display = 'flex';
-      refs.loadingOverlayRef.current.style.transform = 'translateY(0)';
-      refs.loadingOverlayRef.current.style.opacity = '1';
-    }
     
     setTimeout(() => {
+      const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+      
       initGSAP();
       
-      initLenis().then((lenisInstance) => {
-        lenis.current = lenisInstance;
+      if (isMobile) {
         
         setupSectionPositions(state);
-        
         setupSplitTexts(state);
-              setupScrollTriggers(
+        
+        state.currentSection.current = 0;
+        
+        setTimeout(() => {
+          const artists = document.querySelectorAll('.artist');
+          const categories = document.querySelectorAll('.category');
+          
+          artists.forEach(artist => artist.classList.add('loaded'));
+          categories.forEach(category => category.classList.add('loaded'));
+        }, 500);
+        
+        changeSection(
+          0, 
           refs,
           state,
+          () => updateProgressNumbers(state, refs),
           (info: string) => updateDebugInfo(info, refs),
-          (targetSection: number) => snapToSection(
-            targetSection,
-            state,
-            (newSection: number) => changeSection(
-              newSection,
-              refs,
-              state,
-              () => updateProgressNumbers(state, refs),
-              (info: string) => updateDebugInfo(info, refs),
-              (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
-              (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
-              animateNavigation
-            )
-          ),
-          (newSection: number) => changeSection(
-            newSection,
-            refs,
-            state,
-            () => updateProgressNumbers(state, refs),
-            (info: string) => updateDebugInfo(info, refs),
-            (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
-            (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
-            animateNavigation
-          )
+          (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
+          (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
+          animateNavigation
         );
         
-        setupNavigation(state, (targetSection: number) => 
-          snapToSection(
-            targetSection,
-            state,
-            (newSection: number) => changeSection(
-              newSection,
-              refs,
-              state,
-              () => updateProgressNumbers(state, refs),
-              (info: string) => updateDebugInfo(info, refs),
-              (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
-              (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
-              animateNavigation
-            )
-          )
-        );
+        setupNavigation(state, () => {}); // Função vazia para snapToSection no mobile
         
         setupDebug(refs);
-        
         updateProgressNumbers(state, refs);
         
-        animateLoadingCounter(refs, () => {
+        setTimeout(() => {
           animateColumnsEntry();
+        }, 500);
+        
+      } else {
+        
+        initLenis().then((lenisInstance) => {
+          lenis.current = lenisInstance;
+          
+          setupSectionPositions(state);
+          setupSplitTexts(state);
+          
+          setupScrollTriggers(
+            refs,
+            state,
+            (info: string) => updateDebugInfo(info, refs),
+            (targetSection: number) => snapToSection(
+              targetSection,
+              state,
+              (newSection: number) => changeSection(
+                newSection,
+                refs,
+                state,
+                () => updateProgressNumbers(state, refs),
+                (info: string) => updateDebugInfo(info, refs),
+                (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
+                (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
+                animateNavigation
+              )
+            ),
+            (newSection: number) => changeSection(
+              newSection,
+              refs,
+              state,
+              () => updateProgressNumbers(state, refs),
+              (info: string) => updateDebugInfo(info, refs),
+              (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
+              (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
+              animateNavigation
+            )
+          );
+          
+          setupNavigation(state, (targetSection: number) => 
+            snapToSection(
+              targetSection,
+              state,
+              (newSection: number) => changeSection(
+                newSection,
+                refs,
+                state,
+                () => updateProgressNumbers(state, refs),
+                (info: string) => updateDebugInfo(info, refs),
+                (prev: number, next: number, isDown: boolean) => animateFeaturedTexts(prev, next, isDown, state),
+                (prev: number, next: number, isDown: boolean) => animateBackgrounds(prev, next, isDown, state),
+                animateNavigation
+              )
+            )
+          );
+          
+          setupDebug(refs);
+          updateProgressNumbers(state, refs);
+          
+          setTimeout(() => {
+            const artists = document.querySelectorAll('.artist');
+            const categories = document.querySelectorAll('.category');
+            
+            artists.forEach(artist => artist.classList.add('loaded'));
+            categories.forEach(category => category.classList.add('loaded'));
+            
+            animateColumnsEntry();
+          }, 500);
         });
-      });
+      }
     }, 100);
+  };
+
+  const startShowcase = () => {
+    if (!isInitialized.current) {
+      isInitialized.current = true;
+      initPage();
+    }
   };
 
   useEffect(() => {
@@ -160,32 +206,14 @@ export const useShowcase = () => {
     window.addEventListener('pageshow', handlePageShow);
     window.addEventListener('load', handleLoad);
     
-    const initializeAfterDelay = () => {
-      setTimeout(() => {
-        if (document.fonts) {
-          document.fonts.ready.then(() => {
-            initPage();
-          });
-        } else {
-          initPage();
-        }
-      }, 500); 
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeAfterDelay);
-    } else {
-      initializeAfterDelay();
-    }
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       window.removeEventListener('pageshow', handlePageShow);
       window.removeEventListener('load', handleLoad);
-      document.removeEventListener('DOMContentLoaded', initializeAfterDelay);
       cleanupGSAP();
     };
   }, [refs, state]); 
 
-  return { refs };
+  return { refs, startShowcase };
 };

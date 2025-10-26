@@ -37,87 +37,218 @@ export const setupDebug = (refs: ShowcaseRefs) => {
   }
 };
 
-export const setupNavigation = (
-  state: ShowcaseState,
-  snapToSection: (targetSection: number) => void
-) => {
-  // 📱 Detectar se é mobile
-  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+const setupMobileNavigation = (state: ShowcaseState) => {
+  const artists = document.querySelectorAll('.artist');
+  const categories = document.querySelectorAll('.category');
+  const backgrounds = document.querySelectorAll('.background-image');
+  const featuredContents = document.querySelectorAll('.featured-content');
   
-  // Aguardar que os elementos estejam no DOM
-  setTimeout(() => {
-    const artists = document.querySelectorAll('.artist');
-    const categories = document.querySelectorAll('.category');
+  
+  const changeMobileSection = (targetIndex: number) => {
+    state.currentSection.current = targetIndex;
     
-    console.log(`🎯 Setup Navigation - Artists found: ${artists.length}, Categories found: ${categories.length}`);
-    console.log(`📱 Mobile detected: ${isMobile} - Navigation clicks ${isMobile ? 'DISABLED' : 'ENABLED'}`);
+    backgrounds.forEach((bg, index) => {
+      const bgElement = bg as HTMLElement;
+      
+      if (index === targetIndex) {
+        bgElement.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        bgElement.style.opacity = '0';
+        bgElement.style.transform = 'scale(1.05)';
+        bgElement.style.zIndex = '2';
+        bg.classList.add('active');
+        
+        setTimeout(() => {
+          bgElement.style.opacity = '1';
+          bgElement.style.transform = 'scale(1)';
+        }, 50);
+      } else {
+        bgElement.style.transition = 'all 0.6s ease-out';
+        bgElement.style.opacity = '0';
+        bgElement.style.transform = 'scale(0.95)';
+        bgElement.style.zIndex = '0';
+        bg.classList.remove('active');
+      }
+    });
     
     artists.forEach((artist, index) => {
-      // Remover listeners existentes primeiro
-      const newArtist = artist.cloneNode(true);
-      artist.parentNode?.replaceChild(newArtist, artist);
+      const artistElement = artist as HTMLElement;
       
-      // 🔧 SÓ adicionar cliques se NÃO for mobile
-      if (!isMobile) {
-        newArtist.addEventListener('click', (e) => {
-          e.preventDefault();
-          console.log(`🎵 Artist clicked: ${index} (${newArtist.textContent})`);
-          if (index !== state.currentSection.current && !state.isAnimating.current) {
-            snapToSection(index);
-          }
-        });
+      if (index === targetIndex) {
+        artistElement.style.transition = 'all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        artistElement.style.opacity = '0';
+        artistElement.style.transform = 'translateX(-30px)';
+        artistElement.style.paddingLeft = '0px';
+        artist.classList.add('active');
         
-        // Cursor pointer apenas no desktop
-        (newArtist as HTMLElement).style.cursor = 'pointer';
+        setTimeout(() => {
+          artistElement.style.opacity = '1';
+          artistElement.style.transform = 'translateX(0)';
+          artistElement.style.paddingLeft = '15px';
+        }, 100);
       } else {
-        // 📱 Mobile: PREVENIR cliques completamente
-        (newArtist as HTMLElement).style.cursor = 'default';
-        (newArtist as HTMLElement).style.pointerEvents = 'none';
-        
-        // Bloquear eventos de touch também
-        newArtist.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }, { passive: false });
-        
-        console.log(`📱 Mobile: Navigation BLOCKED for ${newArtist.textContent}`);
+        artistElement.style.transition = 'all 0.5s ease-out';
+        artistElement.style.opacity = '0.3';
+        artistElement.style.transform = 'translateX(0)';
+        artistElement.style.paddingLeft = '0';
+        artist.classList.remove('active');
       }
     });
     
     categories.forEach((category, index) => {
-      // Remover listeners existentes primeiro
-      const newCategory = category.cloneNode(true);
-      category.parentNode?.replaceChild(newCategory, category);
+      const categoryElement = category as HTMLElement;
       
-      // 🔧 SÓ adicionar cliques se NÃO for mobile
-      if (!isMobile) {
-        newCategory.addEventListener('click', (e) => {
-          e.preventDefault();
-          console.log(`🎨 Category clicked: ${index} (${newCategory.textContent})`);
-          if (index !== state.currentSection.current && !state.isAnimating.current) {
-            snapToSection(index);
-          }
-        });
+      if (index === targetIndex) {
+        categoryElement.style.transition = 'all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        categoryElement.style.opacity = '0';
+        categoryElement.style.transform = 'translateX(30px)';
+        categoryElement.style.paddingRight = '0px';
+        category.classList.add('active');
         
-        // Cursor pointer apenas no desktop
-        (newCategory as HTMLElement).style.cursor = 'pointer';
+        setTimeout(() => {
+          categoryElement.style.opacity = '1';
+          categoryElement.style.transform = 'translateX(0)';
+          categoryElement.style.paddingRight = '15px';
+        }, 150);
       } else {
-        // 📱 Mobile: PREVENIR cliques completamente
-        (newCategory as HTMLElement).style.cursor = 'default';
-        (newCategory as HTMLElement).style.pointerEvents = 'none';
-        
-        // Bloquear eventos de touch também
-        newCategory.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }, { passive: false });
-        
-        console.log(`📱 Mobile: Navigation BLOCKED for ${newCategory.textContent}`);
+        categoryElement.style.transition = 'all 0.5s ease-out';
+        categoryElement.style.opacity = '0.3';
+        categoryElement.style.transform = 'translateX(0)';
+        categoryElement.style.paddingRight = '0';
+        category.classList.remove('active');
       }
     });
     
-    console.log(`✅ Navigation setup completed for ${bloggersData.length} sections`);
-  }, 1000); // Aguardar 1 segundo para garantir que o DOM esteja pronto
+    featuredContents.forEach((content, index) => {
+      const contentElement = content as HTMLElement;
+      
+      if (index === targetIndex) {
+        contentElement.style.transition = 'all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        contentElement.style.visibility = 'visible';
+        contentElement.style.opacity = '0';
+        contentElement.style.transform = 'translateY(20px) scale(0.95)';
+        content.classList.add('active');
+        
+        setTimeout(() => {
+          contentElement.style.opacity = '1';
+          contentElement.style.transform = 'translateY(0) scale(1)';
+        }, 200);
+      } else {
+        contentElement.style.transition = 'all 0.4s ease-out';
+        contentElement.style.opacity = '0';
+        contentElement.style.transform = 'translateY(-10px) scale(0.98)';
+        
+        setTimeout(() => {
+          contentElement.style.visibility = 'hidden';
+        }, 400);
+        
+        content.classList.remove('active');
+      }
+    });
+  };
+  
+  artists.forEach((artist, index) => {
+    const newArtist = artist.cloneNode(true);
+    artist.parentNode?.replaceChild(newArtist, artist);
+    
+    (newArtist as HTMLElement).classList.add('loaded');
+    (newArtist as HTMLElement).style.opacity = index === 0 ? '1' : '0.3';
+    
+    newArtist.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const artistElement = newArtist as HTMLElement;
+      artistElement.style.transform = 'scale(1.05)';
+      artistElement.style.transition = 'transform 0.15s ease-out';
+      
+      setTimeout(() => {
+        artistElement.style.transform = 'scale(1)';
+        changeMobileSection(index);
+      }, 150);
+    });
+    
+    (newArtist as HTMLElement).style.cursor = 'pointer';
+  });
+  
+  categories.forEach((category, index) => {
+    const newCategory = category.cloneNode(true);
+    category.parentNode?.replaceChild(newCategory, category);
+    
+    (newCategory as HTMLElement).classList.add('loaded');
+    (newCategory as HTMLElement).style.opacity = index === 0 ? '1' : '0.3';
+    
+    newCategory.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const categoryElement = newCategory as HTMLElement;
+      categoryElement.style.transform = 'scale(1.05)';
+      categoryElement.style.transition = 'transform 0.15s ease-out';
+      
+      setTimeout(() => {
+        categoryElement.style.transform = 'scale(1)';
+        changeMobileSection(index);
+      }, 150);
+    });
+    
+    (newCategory as HTMLElement).style.cursor = 'pointer';
+  });
+  
+  setTimeout(() => {
+    changeMobileSection(0);
+  }, 100);  
+};
+
+export const setupNavigation = (
+  state: ShowcaseState,
+  snapToSection: (targetSection: number) => void
+) => {
+  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+  
+  setTimeout(() => {
+    if (isMobile) {
+      setupMobileNavigation(state);
+      return;
+    }
+    
+    const artists = document.querySelectorAll('.artist');
+    const categories = document.querySelectorAll('.category');
+    
+    
+    artists.forEach((artist, index) => {
+      const newArtist = artist.cloneNode(true);
+      artist.parentNode?.replaceChild(newArtist, artist);
+      
+      (newArtist as HTMLElement).classList.add('loaded');
+      (newArtist as HTMLElement).style.opacity = index === 0 ? '1' : '0.3';
+      
+      newArtist.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (index !== state.currentSection.current && !state.isAnimating.current) {
+          snapToSection(index);
+        }
+      });
+      
+      (newArtist as HTMLElement).style.cursor = 'pointer';
+    });
+    
+    categories.forEach((category, index) => {
+      const newCategory = category.cloneNode(true);
+      category.parentNode?.replaceChild(newCategory, category);
+      
+      (newCategory as HTMLElement).classList.add('loaded');
+      (newCategory as HTMLElement).style.opacity = index === 0 ? '1' : '0.3';
+      
+      newCategory.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (index !== state.currentSection.current && !state.isAnimating.current) {
+          snapToSection(index);
+        }
+      });
+      
+      (newCategory as HTMLElement).style.cursor = 'pointer';
+    });
+    
+
+  }, 1000);
 };

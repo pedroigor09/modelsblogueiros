@@ -21,7 +21,6 @@ export const changeSection = (
   
   updateProgressNumbers();
   
-  // Atualizar barra de progresso
   const sectionProgress = state.currentSection.current / (bloggersData.length - 1);
   if (refs.progressFillRef.current) {
     refs.progressFillRef.current.style.width = `${sectionProgress * 100}%`;
@@ -29,13 +28,10 @@ export const changeSection = (
   
   updateDebugInfo(`Changing to Section: ${newSection} (${isScrollingDown ? "Down" : "Up"})`);
   
-  // Animar textos featured
   animateFeaturedTexts(previousSection, newSection, isScrollingDown);
   
-  // Animar backgrounds
   animateBackgrounds(previousSection, newSection, isScrollingDown);
   
-  // Animar navegação
   animateNavigation(newSection);
 };
 
@@ -47,7 +43,6 @@ export const animateFeaturedTexts = (
 ) => {
   const duration = 0.64;
   
-  // Esconder textos que não são relevantes
   const featuredContents = document.querySelectorAll('.featured-content');
   featuredContents.forEach((content, i) => {
     if (i !== newSection && i !== previousSection) {
@@ -59,7 +54,6 @@ export const animateFeaturedTexts = (
     }
   });
   
-  // Animar texto anterior para fora
   if (previousSection !== null) {
     const prevWords = (state.splitTexts.current[`featured-${previousSection}`] as any)?.words;
     if (prevWords) {
@@ -79,7 +73,6 @@ export const animateFeaturedTexts = (
     }
   }
   
-  // Animar novo texto para dentro
   const newWords = (state.splitTexts.current[`featured-${newSection}`] as any)?.words;
   if (newWords) {
     featuredContents[newSection].classList.add('active');
@@ -113,17 +106,14 @@ export const animateBackgrounds = (
   const parallaxAmount = 5;
   const backgrounds = document.querySelectorAll('.background-image');
   
-  // Remover classes active e previous de todos os backgrounds
   backgrounds.forEach((bg) => {
     bg.classList.remove('active', 'previous');
   });
   
-  // Background atual fica ativo com efeito clipPath
   if (backgrounds[newSection]) {
     backgrounds[newSection].classList.add('active');
     
     if (isScrollingDown) {
-      // Animação descendo: cortina vem de baixo para cima
       gsap.set(backgrounds[newSection], {
         opacity: 1,
         y: 0,
@@ -136,7 +126,6 @@ export const animateBackgrounds = (
         ease: "customEase"
       });
     } else {
-      // Animação subindo: cortina vem de cima para baixo
       gsap.set(backgrounds[newSection], {
         opacity: 1,
         y: 0,
@@ -151,18 +140,15 @@ export const animateBackgrounds = (
     }
   }
   
-  // Background anterior fica como previous com efeito parallax
   if (previousSection !== null && backgrounds[previousSection]) {
     backgrounds[previousSection].classList.add('previous');
     
-    // Efeito parallax na imagem anterior
     gsap.to(backgrounds[previousSection], {
       y: isScrollingDown ? `${parallaxAmount}%` : `-${parallaxAmount}%`,
       duration: duration,
       ease: "customEase"
     });
     
-    // Fade out da imagem anterior
     gsap.to(backgrounds[previousSection], {
       opacity: 0,
       delay: duration * 0.5,
@@ -181,7 +167,6 @@ export const animateBackgrounds = (
     state.isAnimating.current = false;
   }
   
-  // Fade out de todos os outros backgrounds
   backgrounds.forEach((bg, i) => {
     if (i !== newSection && i !== previousSection) {
       gsap.to(bg, {
@@ -198,6 +183,8 @@ export const animateNavigation = (newSection: number) => {
   const categories = document.querySelectorAll('.category');
   
   artists.forEach((artist, index) => {
+    artist.classList.add('loaded');
+    
     if (index === newSection) {
       artist.classList.add('active');
     } else {
@@ -206,6 +193,8 @@ export const animateNavigation = (newSection: number) => {
   });
   
   categories.forEach((category, index) => {
+    category.classList.add('loaded');
+    
     if (index === newSection) {
       category.classList.add('active');
     } else {

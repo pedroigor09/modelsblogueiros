@@ -4,7 +4,6 @@ import { SplitText } from 'gsap/SplitText';
 import { ShowcaseRefs, ShowcaseState } from './types';
 import { bloggersData } from './data';
 
-// Variáveis simples como no template original
 let currentSection = 0;
 let isAnimating = false;
 let isSnapping = false;
@@ -19,21 +18,17 @@ export const setupSectionPositions = (state: ShowcaseState) => {
   const fixedSectionTop = fixedSectionElement.offsetTop;
   const fixedSectionHeight = fixedSectionElement.offsetHeight;
   
-  // Reset para usar variáveis locais como no template
   currentSection = 0;
   isAnimating = false;
   isSnapping = false;
   lastProgress = 0;
   sectionPositions = [];
   
-  // Calcular posições exatas como no template original
   const totalSections = bloggersData.length; // 13 seções (0-12)
   for (let i = 0; i < totalSections; i++) {
     sectionPositions.push(fixedSectionTop + (fixedSectionHeight * i) / totalSections);
   }
   
-  console.log(`🎯 Sistema reinicializado - ${totalSections} seções`);
-  console.log(`📋 Seções: ${bloggersData.map((b, i) => `${i}:${b.name}`).join(' → ')}`);
 };
 
 export const setupSplitTexts = (state: ShowcaseState) => {
@@ -91,7 +86,6 @@ export const setupScrollTriggers = (
     height: "100vh"
   });
 
-  // ScrollTrigger principal - EXATAMENTE como no template original
   const mainScrollTrigger = ScrollTrigger.create({
     trigger: ".fixed-section",
     start: "top top",
@@ -104,26 +98,20 @@ export const setupScrollTriggers = (
       const progress = self.progress;
       const progressDelta = progress - lastProgress;
       
-      // Detectar direção do scroll
       if (Math.abs(progressDelta) > 0.001) {
         scrollDirection = progressDelta > 0 ? 1 : -1;
       }
       
-      // Calcular seção alvo - EXATAMENTE como no template
       const maxSection = bloggersData.length - 1; // 12 para Matheus Santos
       const targetSection = Math.min(maxSection, Math.floor(progress * bloggersData.length));
       
-      // Verificar se cruzamos uma fronteira de seção
       if (targetSection !== currentSection && !isAnimating) {
-        // Determinar próxima seção (só permitir mover uma seção por vez)
         const nextSection = currentSection + (targetSection > currentSection ? 1 : -1);
-        // Fazer snap para esta seção
         snapToSection(nextSection);
       }
       
       lastProgress = progress;
       
-      // Atualizar barra de progresso baseada na seção atual
       const sectionProgress = currentSection / maxSection;
       if (refs.progressFillRef.current) {
         refs.progressFillRef.current.style.width = `${sectionProgress * 100}%`;
@@ -133,13 +121,11 @@ export const setupScrollTriggers = (
     }
   });
 
-  // End section handler - mais simples
   ScrollTrigger.create({
     trigger: ".end-section",
     start: "top center",
     end: "bottom bottom",
     onUpdate: (self) => {
-      // Só ativar efeitos se estivermos realmente na última seção
       const isOnLastSection = currentSection === (bloggersData.length - 1);
       
       if (self.progress > 0.1 && isOnLastSection) {
@@ -154,7 +140,6 @@ export const setupScrollTriggers = (
         refs.featuredRef.current?.classList.remove("blur");
       }
       
-      // Só começar unpin se estivermos na última seção
       if (self.progress > 0.1 && isOnLastSection) {
         const newHeight = Math.max(0, 100 - ((self.progress - 0.1) / 0.9) * 100);
         
@@ -192,7 +177,6 @@ export const setupScrollTriggers = (
           });
         }
       } else {
-        // Reset positions
         if (refs.fixedContainerRef.current) {
           gsap.to(refs.fixedContainerRef.current, {
             height: "100vh",
