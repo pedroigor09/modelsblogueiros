@@ -189,6 +189,34 @@ export const mockBloggers: Blogger[] = [
   },
   {
     id: '8',
+    name: 'Ed Kruz',
+    image: getAssetPath('/ed1.jpg'),
+    nameColor: '#1E90FF',
+    colorPalette: {
+      primary: '#1E90FF',
+      secondary: '#FF4500',
+      tertiary: '#FFFFFF'
+    },
+    gallery: [
+      getAssetPath('/ed1.jpg'),
+      getAssetPath('/ed2.jpg'),
+      getAssetPath('/ed3.jpg')
+    ],
+    description: 'Estilo urbano e contemporâneo',
+    style: 'Contemporary Urban',
+    quote: 'Cada peça tem uma história, cada look conta uma experiência.',
+    location: 'Salvador, BA',
+    specialty: 'Streetwear moderno',
+    instagram: {
+      followers: 39900,
+      username: 'edkruz',
+      engagement: 8.3
+    },
+    verified: true,
+    badge: 'Rising Star'
+  },
+  {
+    id: '9',
     name: 'Suane',
     image: getAssetPath('/suane.jpg'),
     nameColor: '#FFFF00',
@@ -217,7 +245,7 @@ export const mockBloggers: Blogger[] = [
     badge: 'Style Icon'
   },
   {
-    id: '9',
+    id: '10',
     name: 'Wallace',
     image: getAssetPath('/wall.jpg'),
     colorPalette: {
@@ -242,7 +270,7 @@ export const mockBloggers: Blogger[] = [
     }
   },
   {
-    id: '10',
+    id: '11',
     name: 'Ygor',
     image: getAssetPath('/ygor.jpg'),
     colorPalette: {
@@ -269,7 +297,7 @@ export const mockBloggers: Blogger[] = [
     badge: 'Trendsetter'
   },
   {
-    id: '11',
+    id: '12',
     name: 'Rone',
     image: getAssetPath('/rone.jpg'),
     colorPalette: {
@@ -294,7 +322,7 @@ export const mockBloggers: Blogger[] = [
     }
   },
   {
-    id: '12',
+    id: '13',
     name: 'Jeferson',
     image: getAssetPath('/jef.jpg'),
     nameColor: '#8B4513',
@@ -322,7 +350,7 @@ export const mockBloggers: Blogger[] = [
     badge: 'Mega Influencer'
   },
   {
-    id: '13',
+    id: '14',
     name: 'Jonathan Silva',
     image: getAssetPath('/jn.jpg'),
     nameColor: '#FF6B35',
@@ -350,7 +378,7 @@ export const mockBloggers: Blogger[] = [
     badge: 'Style Pioneer'
   },
   {
-    id: '14',
+    id: '15',
     name: 'Matheus Santos',
     image: getAssetPath('/math1.jpg'),
     nameColor: '#9B59B6',
@@ -376,33 +404,5 @@ export const mockBloggers: Blogger[] = [
     },
     verified: true,
     badge: 'Fashion Forward'
-  },
-  {
-    id: '15',
-    name: 'Ed Kruz',
-    image: getAssetPath('/ed1.jpg'),
-    nameColor: '#1E90FF',
-    colorPalette: {
-      primary: '#1E90FF',
-      secondary: '#FF4500',
-      tertiary: '#FFFFFF'
-    },
-    gallery: [
-      getAssetPath('/ed1.jpg'),
-      getAssetPath('/ed2.jpg'),
-      getAssetPath('/ed3.jpg')
-    ],
-    description: 'Estilo urbano e contemporâneo',
-    style: 'Contemporary Urban',
-    quote: 'Cada peça tem uma história, cada look conta uma experiência.',
-    location: 'Salvador, BA',
-    specialty: 'Streetwear moderno',
-    instagram: {
-      followers: 39900,
-      username: 'edkruz',
-      engagement: 8.3
-    },
-    verified: true,
-    badge: 'Rising Star'
   }
 ];
