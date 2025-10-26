@@ -140,6 +140,10 @@ export const setupScrollTriggers = (
     // 📱 MOBILE: Scroll completamente livre - sem ScrollTrigger, sem pin, sem controle
     console.log('📱 Mobile detectado - scroll livre ativado');
     
+    // 🔥 FORÇAR seção inicial como 0 (Africanique) no mobile
+    currentSection = 0;
+    console.log('📱 MOBILE FIX: currentSection forçado para 0 (Africanique)');
+    
     // Apenas um ScrollTrigger simples para detectar seção baseada no scroll normal
     ScrollTrigger.create({
       trigger: ".fixed-section",

@@ -44,6 +44,26 @@ export const resetComponentState = (
   }
 
   setTimeout(() => {
+    // 🔥 FORÇAR reset das imagens de fundo - SEMPRE começar com Africanique (índice 0)
+    const backgroundImages = document.querySelectorAll('.background-image');
+    backgroundImages.forEach((img, index) => {
+      img.classList.remove('active');
+      gsap.set(img, { 
+        opacity: 0,
+        zIndex: 0
+      });
+    });
+
+    // 📱 GARANTIR que a primeira imagem (Africanique - index 0) seja sempre ativa
+    if (backgroundImages[0]) {
+      backgroundImages[0].classList.add('active');
+      gsap.set(backgroundImages[0], { 
+        opacity: 1,
+        zIndex: 2
+      });
+      console.log('🔥 MOBILE FIX: Primeira imagem (Africanique) forçada como ativa');
+    }
+    
     const artistItems = document.querySelectorAll('.artist');
     const categoryItems = document.querySelectorAll('.category');
     
@@ -58,6 +78,11 @@ export const resetComponentState = (
       if (index === 0) {
         setTimeout(() => {
           item.classList.add('active');
+          // 🔥 FORÇAR estilo visual do primeiro item ativo
+          gsap.set(item, { 
+            opacity: 1,
+            paddingLeft: '15px'
+          });
         }, 50);
       }
     });
@@ -75,6 +100,11 @@ export const resetComponentState = (
       if (index === 0) {
         setTimeout(() => {
           item.classList.add('active');
+          // 🔥 FORÇAR estilo visual do primeiro item ativo
+          gsap.set(item, { 
+            opacity: 1,
+            paddingRight: '15px'
+          });
         }, 50);
       }
     });
@@ -96,5 +126,7 @@ export const resetComponentState = (
     if (refs.progressFillRef.current) {
       refs.progressFillRef.current.style.width = '0%';
     }
+    
+    console.log('✅ MOBILE FIX: Reset completo - tudo sincronizado com Africanique (índice 0)');
   }, 50); // Delay menor para responsividade
 };

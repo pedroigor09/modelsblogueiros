@@ -41,28 +41,39 @@ export const setupNavigation = (
   state: ShowcaseState,
   snapToSection: (targetSection: number) => void
 ) => {
+  // 📱 Detectar se é mobile
+  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+  
   // Aguardar que os elementos estejam no DOM
   setTimeout(() => {
     const artists = document.querySelectorAll('.artist');
     const categories = document.querySelectorAll('.category');
     
     console.log(`🎯 Setup Navigation - Artists found: ${artists.length}, Categories found: ${categories.length}`);
+    console.log(`📱 Mobile detected: ${isMobile} - Navigation clicks ${isMobile ? 'DISABLED' : 'ENABLED'}`);
     
     artists.forEach((artist, index) => {
       // Remover listeners existentes primeiro
       const newArtist = artist.cloneNode(true);
       artist.parentNode?.replaceChild(newArtist, artist);
       
-      newArtist.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log(`🎵 Artist clicked: ${index} (${newArtist.textContent})`);
-        if (index !== state.currentSection.current && !state.isAnimating.current) {
-          snapToSection(index);
-        }
-      });
-      
-      // Adicionar cursor pointer
-      (newArtist as HTMLElement).style.cursor = 'pointer';
+      // 🔧 SÓ adicionar cliques se NÃO for mobile
+      if (!isMobile) {
+        newArtist.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log(`🎵 Artist clicked: ${index} (${newArtist.textContent})`);
+          if (index !== state.currentSection.current && !state.isAnimating.current) {
+            snapToSection(index);
+          }
+        });
+        
+        // Cursor pointer apenas no desktop
+        (newArtist as HTMLElement).style.cursor = 'pointer';
+      } else {
+        // 📱 Mobile: cursor padrão, sem cliques
+        (newArtist as HTMLElement).style.cursor = 'default';
+        console.log(`📱 Mobile: Navigation disabled for ${newArtist.textContent}`);
+      }
     });
     
     categories.forEach((category, index) => {
@@ -70,16 +81,23 @@ export const setupNavigation = (
       const newCategory = category.cloneNode(true);
       category.parentNode?.replaceChild(newCategory, category);
       
-      newCategory.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log(`🎨 Category clicked: ${index} (${newCategory.textContent})`);
-        if (index !== state.currentSection.current && !state.isAnimating.current) {
-          snapToSection(index);
-        }
-      });
-      
-      // Adicionar cursor pointer
-      (newCategory as HTMLElement).style.cursor = 'pointer';
+      // 🔧 SÓ adicionar cliques se NÃO for mobile
+      if (!isMobile) {
+        newCategory.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log(`🎨 Category clicked: ${index} (${newCategory.textContent})`);
+          if (index !== state.currentSection.current && !state.isAnimating.current) {
+            snapToSection(index);
+          }
+        });
+        
+        // Cursor pointer apenas no desktop
+        (newCategory as HTMLElement).style.cursor = 'pointer';
+      } else {
+        // 📱 Mobile: cursor padrão, sem cliques
+        (newCategory as HTMLElement).style.cursor = 'default';
+        console.log(`📱 Mobile: Navigation disabled for ${newCategory.textContent}`);
+      }
     });
     
     console.log(`✅ Navigation setup completed for ${bloggersData.length} sections`);
