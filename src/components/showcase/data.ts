@@ -100,5 +100,12 @@ export const bloggersData: Blogger[] = [
     category: "Sophisticated",
     featured: "Modern Elegance",
     image: getAssetPath("/math1.jpg")
+  },
+  {
+    id: 14,
+    name: "Ed Kruz",
+    category: "Contemporary Urban",
+    featured: "Modern Streetwear",
+    image: getAssetPath("/ed1.jpg")
   }
 ];

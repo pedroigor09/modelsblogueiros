@@ -376,5 +376,33 @@ export const mockBloggers: Blogger[] = [
     },
     verified: true,
     badge: 'Fashion Forward'
+  },
+  {
+    id: '15',
+    name: 'Ed Kruz',
+    image: getAssetPath('/ed1.jpg'),
+    nameColor: '#1E90FF',
+    colorPalette: {
+      primary: '#1E90FF',
+      secondary: '#FF4500',
+      tertiary: '#FFFFFF'
+    },
+    gallery: [
+      getAssetPath('/ed1.jpg'),
+      getAssetPath('/ed2.jpg'),
+      getAssetPath('/ed3.jpg')
+    ],
+    description: 'Estilo urbano e contemporâneo',
+    style: 'Contemporary Urban',
+    quote: 'Cada peça tem uma história, cada look conta uma experiência.',
+    location: 'Salvador, BA',
+    specialty: 'Streetwear moderno',
+    instagram: {
+      followers: 39900,
+      username: 'edkruz',
+      engagement: 8.3
+    },
+    verified: true,
+    badge: 'Rising Star'
   }
 ];
